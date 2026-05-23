@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { siteConfig } from '@/data/content';
+import LocationMap from '@/components/ui/location-map';
 import { Phone, Mail, MapPin, Clock, MessageSquare } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -30,27 +31,7 @@ export default function DoveSiamoPage() {
         </div>
 
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
-          {/* Map iframe */}
-          <div className="overflow-hidden rounded-2xl shadow-warm-md">
-            <iframe
-              title="Mappa Residence V.G Cabiate"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=9.09%2C45.66%2C9.13%2C45.69&layer=mapnik&marker=45.674%2C9.107"
-              width="100%"
-              height="420"
-              loading="lazy"
-              className="border-0"
-            />
-            <div className="bg-white px-5 py-3">
-              <a
-                href={contact.maps.googlemaps}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-sans text-sm font-medium text-forest underline hover:text-gold transition-colors"
-              >
-                Apri in Google Maps →
-              </a>
-            </div>
-          </div>
+          <LocationMap variant="full" />
 
           {/* Info */}
           <div className="space-y-8">

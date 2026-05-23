@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { siteConfig, navigation, assets } from '@/data/content';
+import { siteConfig, assets } from '@/data/content';
+import LocationMap from '@/components/ui/location-map';
 import { Phone, Mail, MapPin, Clock, MessageCircle } from 'lucide-react';
 
 const quickLinks = [
@@ -174,16 +175,15 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Mini map preview */}
-            <div className="mt-6 overflow-hidden rounded-xl ring-1 ring-white/10">
-              <a href={contact.maps.googlemaps} target="_blank" rel="noopener noreferrer" aria-label="Apri mappa">
-                <Image
-                  src="/images/IMG_4208.webp"
-                  alt="Residence V.G — Via Francesco Petrarca 14 Cabiate"
-                  width={300}
-                  height={120}
-                  className="h-24 w-full object-cover opacity-60 transition-opacity duration-300 hover:opacity-80"
-                />
+            <div className="mt-6">
+              <a
+                href={contact.maps.googlemaps}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Apri mappa Residence V.G su Google Maps"
+                className="block transition-transform duration-300 hover:scale-[1.02]"
+              >
+                <LocationMap variant="compact" showFooter={false} />
               </a>
             </div>
           </div>

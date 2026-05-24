@@ -154,7 +154,7 @@ function ActionCard({
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
             <a
               href={`tel:${siteConfig.contact.phoneRaw}`}
-              className="btn-primary group relative w-full justify-center px-8 py-4 text-base sm:w-auto"
+              className="btn-primary group relative w-full justify-center px-8 py-4 text-base sm:w-auto md:whitespace-nowrap"
             >
               <Phone size={17} strokeWidth={2.5} className="transition-transform group-hover:rotate-12" />
               Chiama — {siteConfig.contact.phone}
@@ -402,7 +402,13 @@ export default function VisitSection() {
                 </div>
                 <div className="mt-4 min-w-0">
                   <p className="font-sans text-[10px] uppercase tracking-wider text-white/35">{label}</p>
-                  <p className="mt-1 font-sans text-xs font-semibold leading-tight text-white/90">{value}</p>
+                  <p
+                    className={`mt-1 font-sans text-xs font-semibold leading-tight text-white/90${
+                      label === 'Telefono' ? ' md:whitespace-nowrap' : ''
+                    }`}
+                  >
+                    {value}
+                  </p>
                 </div>
               </motion.a>
             ))}

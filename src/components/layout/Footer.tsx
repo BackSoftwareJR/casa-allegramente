@@ -14,8 +14,15 @@ const quickLinks = [
   { label: 'La nostra giornata', href: '/#' },
   { label: 'Galleria',       href: '/galleria' },
   { label: 'Dove siamo',     href: '/dove-siamo' },
-  { label: 'Blog',           href: '/blog' },
   { label: 'Prenota visita', href: '/#contatti' },
+];
+
+const blogResourceLinks = [
+  { label: 'Tutti gli articoli', href: '/blog' },
+  { label: 'Come scegliere una residenza', href: '/blog/come-scegliere-residenza-anziani-autosufficienti' },
+  { label: 'Quando portare un genitore in struttura', href: '/blog/quando-momento-giusto-residenza-genitore-anziano' },
+  { label: 'Residenze anziani in provincia di Como', href: '/blog/residenze-anziani-como-provincia-guida' },
+  { label: 'Documenti per l\'ingresso in residenza', href: '/blog/documenti-ingresso-residenza-anziani' },
 ];
 
 export default function Footer() {
@@ -82,10 +89,10 @@ export default function Footer() {
 
       {/* ── Main footer grid ── */}
       <div className="relative container-site py-14 md:py-20">
-        <div className="grid gap-10 md:grid-cols-12">
+        <div className="grid gap-10 md:grid-cols-12 lg:grid-cols-12">
 
-          {/* Brand col — 5/12 */}
-          <div className="md:col-span-5">
+          {/* Brand col — 4/12 */}
+          <div className="md:col-span-12 lg:col-span-4">
             <Link href="/" className="group inline-flex items-center gap-3">
               <Image
                 src={assets.logo}
@@ -134,11 +141,8 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Spacer */}
-          <div className="hidden md:block md:col-span-1" />
-
-          {/* Quick links — 3/12 */}
-          <div className="md:col-span-3">
+          {/* Quick links — 2/12 */}
+          <div className="md:col-span-6 lg:col-span-2">
             <h3 className="font-sans text-[10px] font-semibold uppercase tracking-[0.2em] text-gold/60">
               Navigazione
             </h3>
@@ -157,8 +161,28 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Blog resources — 3/12 */}
+          <div className="md:col-span-6 lg:col-span-3">
+            <h3 className="font-sans text-[10px] font-semibold uppercase tracking-[0.2em] text-gold/60">
+              Risorse e Guide
+            </h3>
+            <ul className="mt-5 space-y-2">
+              {blogResourceLinks.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="group inline-flex items-center gap-2 font-sans text-sm text-white/50 transition-colors hover:text-white"
+                  >
+                    <span className="h-px w-0 bg-gold transition-all duration-200 group-hover:w-3" />
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           {/* Address + hours — 3/12 */}
-          <div className="md:col-span-3">
+          <div className="md:col-span-12 lg:col-span-3">
             <h3 className="font-sans text-[10px] font-semibold uppercase tracking-[0.2em] text-gold/60">
               Dove siamo
             </h3>

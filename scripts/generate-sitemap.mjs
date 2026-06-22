@@ -1,10 +1,11 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import matter from 'gray-matter';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const BASE = 'https://vgresidence.com';
-const articlesPath = path.join(__dirname, '../src/data/blog/articles.ts');
+const BLOG_DIR = path.join(__dirname, '../content/blog');
 const outputPath = path.join(__dirname, '../public/sitemap.xml');
 
 const mainPages = [
@@ -44,20 +45,28 @@ function urlEntry({ loc, lastmod, changefreq, priority }) {
   ].join('\n');
 }
 
-const articlesContent = fs.readFileSync(articlesPath, 'utf8');
-const articleRe = /slug:\s*'([^']+)'[\s\S]*?date:\s*'([^']+)'/g;
-const blogPages = [];
-let match;
+function getBlogPages() {
+  if (!fs.existsSync(BLOG_DIR)) return [];
 
-while ((match = articleRe.exec(articlesContent)) !== null) {
-  blogPages.push({
-    loc: `${BASE}/blog/${match[1]}`,
-    lastmod: toLastMod(match[2]),
-    changefreq: 'monthly',
-    priority: '0.7',
-  });
+  return fs
+    .readdirSync(BLOG_DIR)
+    .filter((f) => f.endsWith('.mdx'))
+    .map((filename) => {
+      const raw = fs.readFileSync(path.join(BLOG_DIR, filename), 'utf8');
+      const { data } = matter(raw);
+      const slug = data.slug ?? filename.replace(/\.mdx$/, '');
+      const lastModified = data.lastModified ?? data.date ?? new Date().toISOString();
+
+      return {
+        loc: `${BASE}/blog/${slug}`,
+        lastmod: toLastMod(lastModified),
+        changefreq: 'monthly',
+        priority: '0.7',
+      };
+    });
 }
 
+const blogPages = getBlogPages();
 const now = new Date().toISOString();
 const staticPages = mainPages.map((page) => ({
   ...page,

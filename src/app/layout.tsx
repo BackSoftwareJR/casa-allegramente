@@ -5,6 +5,7 @@ import { siteConfig } from '@/data/content';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import FloatingCTA from '@/components/FloatingCTA';
+import GoogleAnalytics from '@/components/GoogleAnalytics';
 
 const display = Cormorant_Garamond({
   subsets: ['latin'],
@@ -57,6 +58,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="it" className={`${display.variable} ${sans.variable}`}>
       <body>
+        <GoogleAnalytics />
         <a href="#main-content" className="skip-link">
           Vai al contenuto principale
         </a>

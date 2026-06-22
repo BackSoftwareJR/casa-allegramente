@@ -8,8 +8,11 @@
   "scripts": {
     "dev": "next dev",
     "predev": "node scripts/generate-blog-data.mjs",
-    "prebuild": "node scripts/generate-blog-data.mjs && node scripts/generate-sitemap.mjs",
+    "generate:blog": "node scripts/generate-blog-data.mjs",
+    "generate:sitemap": "node scripts/generate-sitemap.mjs",
+    "prebuild": "node scripts/generate-sitemap.mjs",
     "build": "next build",
+    "build:hostinger": "node scripts/generate-sitemap.mjs && next build",
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",

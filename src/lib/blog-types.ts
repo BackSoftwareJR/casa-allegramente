@@ -26,6 +26,8 @@ export interface BlogPostMeta {
 
 export interface BlogPost extends BlogPostMeta {
   content: string;
+  /** Pre-rendered MDX body — generated at build time to avoid runtime MDX compilation. */
+  html: string;
 }
 
 export function getCategoryName(id: string): string {

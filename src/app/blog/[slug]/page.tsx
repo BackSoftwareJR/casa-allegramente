@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { MDXRemote } from 'next-mdx-remote/rsc';
 import {
   extractHeadings,
   getAllPostMeta,
@@ -16,8 +15,10 @@ import BlogLayout from '@/components/blog/BlogLayout';
 import AuthorBox from '@/components/blog/AuthorBox';
 import RelatedArticles from '@/components/blog/RelatedArticles';
 import TableOfContents from '@/components/blog/TableOfContents';
-import { mdxComponents } from '@/components/blog/mdx-components';
 import { ArticleSchema, BreadcrumbListSchema } from '@/components/JsonLd';
+
+export const dynamic = 'force-static';
+export const dynamicParams = false;
 
 interface PageProps {
   params: { slug: string };
@@ -110,9 +111,10 @@ export default function BlogArticlePage({ params }: PageProps) {
             </>
           }
         >
-          <div className="max-w-[700px] space-y-5">
-            <MDXRemote source={post.content} components={mdxComponents} />
-          </div>
+          <div
+            className="max-w-[700px] space-y-5"
+            dangerouslySetInnerHTML={{ __html: post.html }}
+          />
         </BlogLayout>
 
         <div className="mt-14 max-w-[700px]">

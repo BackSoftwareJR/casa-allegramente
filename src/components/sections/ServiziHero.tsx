@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatedMarqueeHero } from "@/components/ui/hero-3";
-import { serviziContent, visitCta } from "@/data/content";
+import { visitCta } from "@/data/content";
 
 const SERVIZI_HERO_IMAGES = [
   "/images/villa-esterno-giardino-hero-allegramente.avif",
@@ -26,7 +26,6 @@ export default function ServiziHero() {
           compresi nella retta
         </>
       }
-      description={serviziContent.intro.text}
       ctaText={visitCta.label}
       ctaHref="/contatti"
       images={SERVIZI_HERO_IMAGES}

@@ -612,13 +612,6 @@ export const chiSiamoContent = {
   },
 } as const;
 
-export const serviziContent = {
-  intro: {
-    title: 'I nostri servizi compresi nella retta',
-    text: 'In Casa Allegramente vitto, alloggio, pulizia, assistenza h24, attività ricreative e accompagnamento quotidiano fanno parte di un\'unica accoglienza integrata e calda, come descritto nella carta dei servizi AllegraMente 2.0.',
-  },
-} as const;
-
 export const vitaInCasaContent = {
   intro: {
     title: 'La nostra giornata tipo',

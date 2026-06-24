@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 interface AnimatedMarqueeHeroProps {
   tagline: string;
   title: React.ReactNode;
-  description: string;
+  description?: string;
   ctaText: string;
   ctaHref?: string;
   images: string[];
@@ -111,21 +111,23 @@ export const AnimatedMarqueeHero: React.FC<AnimatedMarqueeHeroProps> = ({
             : title}
         </motion.h1>
 
-        <motion.p
-          initial="hidden"
-          animate="show"
-          variants={FADE_IN_ANIMATION_VARIANTS}
-          transition={{ delay: 0.5 }}
-          className="mt-6 max-w-xl text-lg text-muted-foreground"
-        >
-          {description}
-        </motion.p>
+        {description ? (
+          <motion.p
+            initial="hidden"
+            animate="show"
+            variants={FADE_IN_ANIMATION_VARIANTS}
+            transition={{ delay: 0.5 }}
+            className="mt-6 max-w-xl text-lg text-muted-foreground"
+          >
+            {description}
+          </motion.p>
+        ) : null}
 
         <motion.div
           initial="hidden"
           animate="show"
           variants={FADE_IN_ANIMATION_VARIANTS}
-          transition={{ delay: 0.6 }}
+          transition={{ delay: description ? 0.6 : 0.5 }}
         >
           <ActionButton href={ctaHref}>{ctaText}</ActionButton>
         </motion.div>

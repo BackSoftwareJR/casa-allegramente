@@ -10,28 +10,17 @@ import {
   useReducedMotion,
   MotionValue,
 } from 'framer-motion';
-import { dailyRoutine } from '@/data/content';
+import { dailyRoutine, dailyRoutineSlotImages } from '@/data/content';
+import { brand } from '@/lib/brand-colors';
+import SectionPastelBg from '@/components/ui/SectionPastelBg';
 
 /* Each slot: photo + visually distinct accent/tint — no two consecutive slots share the same accent */
 const slotConfig = [
-  // Risveglio gentile → camera con luce mattutina
-  { img: '/images/4vg.webp',                          tint: 'rgba(201,168,76,0.45)',  accent: '#C9A84C', grad: 'from-[#1C1508] to-[#2E220C]' },
-  // Il primo momento insieme → sala comune con persone
-  { img: '/images/foto_orizzontali/IMG_2382.webp',    tint: 'rgba(60,45,20,0.55)',    accent: '#D4A840', grad: 'from-[#1E1608] to-[#3C2A0C]' },
-  // Movimento e vitalità → esercizi guidati
-  { img: '/images/foto_orizzontali/IMG_2387.webp',    tint: 'rgba(107,143,113,0.52)', accent: '#6B8F71', grad: 'from-[#0E1A0A] to-[#162810]' },
-  // A tavola, tutti insieme → sala pranzo apparecchiata
-  { img: '/images/3vg.webp',                          tint: 'rgba(85,120,90,0.48)',   accent: '#7FA885', grad: 'from-[#0A1C0A] to-[#123018]' },
-  // Il riposo → camera singola tranquilla
-  { img: '/images/1vg.webp',                          tint: 'rgba(107,143,113,0.50)', accent: '#6B8F71', grad: 'from-[#0C1C0E] to-[#143020]' },
-  // Creatività e socialità → attività creative al tavolo
-  { img: '/images/foto_orizzontali/IMG_2389.webp',    tint: 'rgba(90,125,95,0.48)',   accent: '#6B8F71', grad: 'from-[#0E1C10] to-[#162E1C]' },
-  // L'aperitivo → terrazza al tramonto
-  { img: '/images/6vg.webp',                          tint: 'rgba(201,168,76,0.50)',  accent: '#E8C97A', grad: 'from-[#1C1208] to-[#2E1C0C]' },
-  // La cena → ospiti al tavolo in compagnia
-  { img: '/images/foto_orizzontali/IMG_2392.webp',    tint: 'rgba(45,35,15,0.60)',    accent: '#D4A840', grad: 'from-[#1A1206] to-[#2E2010]' },
-  // La buonanotte → camera con lampada accesa
-  { img: '/images/7vg.webp',                          tint: 'rgba(15,22,16,0.68)',    accent: '#C9A84C', grad: 'from-[#06080E] to-[#0C1018]' },
+  { img: dailyRoutineSlotImages[0], tint: 'rgba(232,149,106,0.40)', accent: brand.orange.accent, grad: 'from-[#1C0E04] to-[#2E1A06]' },
+  { img: dailyRoutineSlotImages[1], tint: 'rgba(127,190,110,0.40)', accent: brand.green.accent, grad: 'from-[#0A1204] to-[#12200A]' },
+  { img: dailyRoutineSlotImages[2], tint: 'rgba(232,204,90,0.35)', accent: brand.yellow.accent, grad: 'from-[#1A1400] to-[#2E2400]' },
+  { img: dailyRoutineSlotImages[3], tint: 'rgba(212,132,114,0.40)', accent: brand.terracotta.accent, grad: 'from-[#1A0804] to-[#2E1208]' },
+  { img: dailyRoutineSlotImages[4], tint: 'rgba(138,112,96,0.50)', accent: brand.brown.soft, grad: 'from-[#180C04] to-[#2A1808]' },
 ];
 
 const N = dailyRoutine.length;
@@ -417,22 +406,24 @@ function DailyRoutineMobile() {
 /* ─────────────────── REDUCED MOTION FALLBACK ─────────────────── */
 function ReducedMotionFallback() {
   return (
-    <section className="section-spacing bg-linen-100" aria-label="La nostra giornata">
+    <section className="bg-transparent" aria-label="La nostra giornata">
+      <SectionPastelBg hue="terracotta" className="section-spacing">
       <div className="container-site">
         <div className="mb-10 text-center">
-          <p className="font-sans text-sm font-semibold uppercase tracking-[0.15em] text-gold-700">La nostra giornata</p>
-          <h2 className="mt-3 font-display text-3xl font-semibold text-forest">Una routine costruita su di te</h2>
+          <p className="font-sans text-sm font-semibold uppercase tracking-[0.15em] text-primary-700">La nostra giornata</p>
+          <h2 className="mt-3 font-display text-3xl font-bold text-warm-brown">Una routine costruita su di te</h2>
         </div>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {dailyRoutine.map((slot) => (
             <div key={slot.moment} className="rounded-xl bg-white p-5 shadow-warm-sm">
-              <p className="font-display text-xl font-bold text-gold">{slot.moment}</p>
-              <h3 className="mt-1 font-sans text-sm font-semibold text-ink">{slot.title}</h3>
+              <p className="font-sans text-xl font-bold text-primary">{slot.moment}</p>
+              <h3 className="mt-1 font-sans text-sm font-semibold text-warm-brown">{slot.title}</h3>
               <p className="mt-1 font-sans text-xs text-ink-muted">{slot.description}</p>
             </div>
           ))}
         </div>
       </div>
+      </SectionPastelBg>
     </section>
   );
 }

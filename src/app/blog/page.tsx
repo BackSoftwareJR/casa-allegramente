@@ -8,16 +8,17 @@ import BlogCTA from '@/components/blog/BlogCTA';
 import { BreadcrumbListSchema } from '@/components/JsonLd';
 
 export const metadata: Metadata = createPageMetadata({
-  title: 'Blog — Guide e Consigli per Anziani e Famiglie | Residence V.G',
+  title: 'Blog — Guide e Consigli per Anziani e Famiglie | Casa Allegramente',
   description:
-    'Il blog di Residence V.G: guide pratiche per scegliere una residenza, affrontare le scelte con i genitori anziani e scoprire la vita quotidiana a Cabiate, in provincia di Como.',
+    'Il blog di Casa Allegramente: guide pratiche per scegliere una casa famiglia, affrontare le scelte con i genitori anziani e scoprire la vita quotidiana a Rivarolo Canavese.',
   path: '/blog',
   keywords: [
-    'blog anziani Cabiate',
-    'guide residenza anziani Como',
+    'blog anziani Rivarolo Canavese',
+    'guide casa famiglia anziani Canavese',
     'consigli famiglia terza età',
-    'casa famiglia Brianza',
+    'residenza anziani Piemonte',
   ],
+  noIndex: true,
 });
 
 export default function BlogIndexPage() {
@@ -44,8 +45,8 @@ export default function BlogIndexPage() {
 
         <div className="mt-16">
           <BlogCTA
-            title="Vuoi conoscere Residence V.G?"
-            description="Siamo a Via Francesco Petrarca 14, Cabiate (CO). Prenota una visita gratuita: ti mostriamo gli spazi e rispondiamo a ogni domanda, senza impegno."
+            title="Vuoi conoscere Casa Allegramente?"
+            description="Siamo in Via Gria 12, Rivarolo Canavese (TO). Prenota una visita gratuita: ti mostriamo gli spazi e rispondiamo a ogni domanda, senza impegno."
             variant="whatsapp"
           />
         </div>

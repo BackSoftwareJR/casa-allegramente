@@ -59,7 +59,7 @@ export const mdxComponents: MDXComponents = {
     );
   },
   blockquote: ({ children }) => (
-    <blockquote className="my-6 border-l-4 border-gold/60 pl-5 font-display text-lg italic text-forest/80">
+    <blockquote className="my-6 border-l-4 border-gold/60 pl-5 font-sans text-lg italic text-ink-light">
       {children}
     </blockquote>
   ),

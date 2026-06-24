@@ -7,78 +7,129 @@ module.exports = {
   ],
   theme: {
     extend: {
-      // ── PALETTE RESIDENCE V.G ──────────────────────────────────────────────
-      // Verde salvia + oro caldo + neutri linen — elegante, caldo, autorevole
+      // ── PALETTE CASA ALLEGRAMENTE (dal logo) ──────────────────────────────
       colors: {
-        // Primari — Verde foresta / salvia
+        // Primari dal logo — arancione pastello
+        primary: {
+          DEFAULT: '#E8956A',
+          dark: '#D97B4E',
+          light: '#F5D4BC',
+          50: '#FAF0E8',
+          100: '#FAEDE3',
+          200: '#F5D4BC',
+          300: '#EDB896',
+          400: '#E8956A',
+          500: '#E8760A',
+          600: '#D97B4E',
+          700: '#B8653A',
+          800: '#8F4E2E',
+          900: '#5C3A1E',
+        },
+        // Verde logo — pastello
+        secondary: {
+          DEFAULT: '#7FBE6E',
+          dark: '#5A9A4A',
+          light: '#D0E8C4',
+          50: '#EAF4E4',
+          100: '#D0E8C4',
+          200: '#A8D49A',
+          300: '#7FBE6E',
+          400: '#6BA85C',
+          500: '#5A8C3A',
+          600: '#4A7230',
+          700: '#3A5826',
+          800: '#2A401C',
+          900: '#1A2812',
+        },
+        // Colori caldi dal logo — pastello
+        warm: {
+          brown: '#8A7060',
+          sand: '#F5E8C8',
+          terracotta: '#D48472',
+          yellow: '#E8CC5A',
+        },
+        // Token brand per box e sfondi
+        brand: {
+          orange: { pastel: '#FAEDE3', soft: '#F5D4BC', accent: '#E8956A' },
+          green: { pastel: '#EAF4E4', soft: '#D0E8C4', accent: '#7FBE6E' },
+          yellow: { pastel: '#FDF8E3', soft: '#F9EDB8', accent: '#E8CC5A' },
+          terracotta: { pastel: '#F9EAE6', soft: '#EFD0C8', accent: '#D48472' },
+          brown: { pastel: '#F0E8E0', soft: '#D9C9BA', accent: '#8A7060' },
+        },
+        // Superfici calde
+        linen: {
+          DEFAULT: '#FAF6F0',
+          50: '#FFFDFB',
+          100: '#FAF6F0',
+          200: '#F2EAE0',
+          300: '#E5D8CC',
+          400: '#CDBFB0',
+          500: '#B0A090',
+        },
+        // Testo caldo
+        ink: {
+          DEFAULT: '#2A1A0E',
+          light: '#5C3A1E',
+          muted: '#8A7060',
+        },
+        // Antracite caldo — testo moderno (non cold gray)
+        anthracite: {
+          DEFAULT: '#2D2A26',
+          light: '#4A4540',
+          muted: '#6B6560',
+        },
+        cream: '#FDF8F2',
+        parchment: '#F2EAE0',
+
+        // ── Legacy aliases (mantengono compatibilità con componenti esistenti)
         forest: {
-          DEFAULT: "#2D3A2E",
-          50:  "#F2F5F2",
-          100: "#D8E2D9",
-          200: "#B5C8B7",
-          300: "#8FAE92",
-          400: "#6B9070",
-          500: "#4A6741",
-          600: "#2D3A2E", // DEFAULT
-          700: "#223024",
-          800: "#18231A",
-          900: "#0F1610",
+          DEFAULT: '#5C3A1E',
+          50: '#FAF6F0',
+          100: '#F2EAE0',
+          200: '#E5D8CC',
+          300: '#CDBFB0',
+          400: '#A08060',
+          500: '#7A5A3A',
+          600: '#5C3A1E',
+          700: '#4A2E16',
+          800: '#3A2210',
+          900: '#2A1A0A',
         },
         sage: {
-          DEFAULT: "#6B8F71",
-          50:  "#F4F8F4",
-          100: "#E0EDE1",
-          200: "#C0D9C3",
-          300: "#A8C5A0",
-          400: "#8AAF8E",
-          500: "#6B8F71", // DEFAULT
-          600: "#4A6741",
-          700: "#374E31",
-          800: "#253622",
-          900: "#141E12",
+          DEFAULT: '#7FBE6E',
+          50: '#EAF4E4',
+          100: '#D0E8C4',
+          200: '#A8D49A',
+          300: '#7FBE6E',
+          400: '#6BA85C',
+          500: '#5A8C3A',
+          600: '#4A7230',
+          700: '#3A5826',
+          800: '#2A401C',
+          900: '#1A2812',
         },
-        // Accent — Oro caldo
         gold: {
-          DEFAULT: "#C9A84C",
-          50:  "#FDF9EE",
-          100: "#FAF0D0",
-          200: "#F4DFA0",
-          300: "#E8C97A",
-          400: "#D9B05E",
-          500: "#C9A84C", // DEFAULT
-          600: "#A88B38",
-          700: "#8B6914",
-          800: "#6B4E0F",
-          900: "#4A360A",
+          DEFAULT: '#E8956A',
+          50: '#FAF0E8',
+          100: '#FAEDE3',
+          200: '#F5D4BC',
+          300: '#EDB896',
+          400: '#E8956A',
+          500: '#E8760A',
+          600: '#D97B4E',
+          700: '#B8653A',
+          800: '#8F4E2E',
+          900: '#5C3A1E',
         },
-        // Neutri caldi — base del sito
-        linen: {
-          DEFAULT: "#F5F2ED",
-          50:  "#FDFCFA",
-          100: "#F5F2ED", // DEFAULT (sfondo globale)
-          200: "#EDE9E0", // parchment (sezioni alternate)
-          300: "#D4CFC7", // warm gray (bordi)
-          400: "#B5AFA5",
-          500: "#958E83",
-        },
-        // Testo
-        ink: {
-          DEFAULT: "#1A1A1A",
-          light: "#3D3D3D",
-          muted: "#717171",
-        },
-        // Superfici
-        cream: "#FDF6E3",
-        parchment: "#EDE9E0",
-        // Legacy — mantenuto per compatibilità con articoli blog
-        "warm-50": "#FFFBEB",
+        // Legacy — mantenuto per articoli blog
+        "warm-50": "#FEF5EB",
       },
 
       // ── TIPOGRAFIA ─────────────────────────────────────────────────────────
       fontFamily: {
-        display: ["var(--font-display)", "Cormorant Garamond", "Georgia", "serif"],
-        sans: ["var(--font-sans)", "Inter", "system-ui", "sans-serif"],
-        serif: ["var(--font-display)", "Cormorant Garamond", "Georgia", "serif"],
+        display: ["var(--font-display)", "Nunito", "system-ui", "sans-serif"],
+        sans: ["var(--font-sans)", "Source Sans 3", "system-ui", "sans-serif"],
+        serif: ["var(--font-display)", "Nunito", "system-ui", "sans-serif"],
       },
       fontSize: {
         "display-xl": ["72px", { lineHeight: "1.1", letterSpacing: "-0.02em" }],
@@ -100,6 +151,7 @@ module.exports = {
         "xl":  "12px",
         "2xl": "16px",
         "3xl": "24px",
+        "4xl": "32px",
       },
 
       // ── ANIMAZIONI ─────────────────────────────────────────────────────────
@@ -114,18 +166,20 @@ module.exports = {
         "spring": "cubic-bezier(0.34, 1.56, 0.64, 1)",
       },
 
-      // ── OMBRE ─────────────────────────────────────────────────────────────
+      // ── OMBRE CALDE ────────────────────────────────────────────────────────
       boxShadow: {
-        "warm-sm": "0 1px 3px rgba(45, 58, 46, 0.08)",
-        "warm-md": "0 4px 12px rgba(45, 58, 46, 0.10)",
-        "warm-lg": "0 12px 40px rgba(45, 58, 46, 0.12)",
-        "gold-glow": "0 0 20px rgba(201, 168, 76, 0.20)",
+        "warm-sm": "0 1px 3px rgba(138,112,96,0.06)",
+        "warm-md": "0 4px 16px rgba(138,112,96,0.08)",
+        "warm-lg": "0 12px 40px rgba(138,112,96,0.10)",
+        "gold-glow": "0 0 24px rgba(232,149,106,0.18)",
+        "primary-glow": "0 0 28px rgba(232,149,106,0.22)",
       },
 
       // ── BACKGROUND ────────────────────────────────────────────────────────
       backgroundImage: {
-        "hero-overlay": "linear-gradient(to bottom, rgba(45,58,46,0.55) 0%, rgba(45,58,46,0.30) 60%, rgba(45,58,46,0.65) 100%)",
-        "section-gradient": "linear-gradient(to bottom, #F5F2ED, #EDE9E0)",
+        "hero-overlay": "linear-gradient(to bottom, rgba(42,26,14,0.55) 0%, rgba(42,26,14,0.30) 60%, rgba(42,26,14,0.65) 100%)",
+        "section-gradient": "linear-gradient(to bottom, #FAF6F0, #F2EAE0)",
+        "warm-gradient": "linear-gradient(135deg, #FAF6F0 0%, #F2EAE0 100%)",
       },
 
       // ── CONTAINERS ────────────────────────────────────────────────────────
@@ -139,10 +193,20 @@ module.exports = {
           from: { transform: "translateX(0)" },
           to: { transform: "translateX(calc(-100% - var(--gap)))" },
         },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-12px)' },
+        },
+        blob: {
+          '0%, 100%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' },
+          '50%': { borderRadius: '30% 60% 70% 40% / 50% 60% 30% 60%' },
+        },
       },
       animation: {
         marquee: "marquee var(--duration, 40s) linear infinite",
         "marquee-reverse": "marquee var(--duration, 40s) linear infinite reverse",
+        float: "float 6s ease-in-out infinite",
+        blob: "blob 8s ease-in-out infinite",
       },
     },
   },

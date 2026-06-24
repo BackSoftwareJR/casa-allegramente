@@ -3,6 +3,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { testimonials } from '@/data/content';
+import { brand } from '@/lib/brand-colors';
+import SectionPastelBg from '@/components/ui/SectionPastelBg';
 import { Star, ArrowLeft, ArrowRight } from 'lucide-react';
 
 export default function TestimonialsSection() {
@@ -22,18 +24,21 @@ export default function TestimonialsSection() {
   const prev = useCallback(() => go((cur - 1 + testimonials.length) % testimonials.length), [cur, go]);
 
   useEffect(() => {
-    if (prefersReduced) return;
+    if (prefersReduced || testimonials.length === 0) return;
     const t = setInterval(next, 6000);
     return () => clearInterval(t);
   }, [next, prefersReduced]);
+
+  if (testimonials.length === 0) return null;
 
   const t = testimonials[cur];
 
   return (
     <section
       aria-label="Testimonianze delle famiglie"
-      className="relative overflow-hidden bg-white py-14 md:section-spacing"
+      className="relative overflow-hidden bg-transparent py-14 md:section-spacing"
     >
+      <SectionPastelBg hue="brown" className="py-0">
       <div
         className="pointer-events-none absolute -top-4 left-0 select-none font-display font-bold leading-none text-forest"
         style={{ fontSize: 'clamp(18rem, 35vw, 32rem)', opacity: 0.03, lineHeight: 0.85, letterSpacing: '-0.05em' }}
@@ -76,7 +81,7 @@ export default function TestimonialsSection() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -6 }}
                     transition={{ duration: 0.25 }}
-                    className="font-display text-3xl font-bold leading-none text-forest"
+                    className="font-sans text-3xl font-bold leading-none text-warm-brown"
                   >
                     {String(cur + 1).padStart(2, '0')}
                   </motion.span>
@@ -117,7 +122,7 @@ export default function TestimonialsSection() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.3 }}
-                    className="font-display text-5xl font-bold leading-none text-forest"
+                    className="font-sans text-5xl font-bold leading-none text-warm-brown"
                   >
                     {String(cur + 1).padStart(2, '0')}
                   </motion.span>
@@ -140,7 +145,7 @@ export default function TestimonialsSection() {
                   type="button"
                   onClick={prev}
                   aria-label="Testimonianza precedente"
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-linen-300 bg-white text-ink-muted transition-all duration-200 hover:border-forest hover:bg-forest hover:text-white hover:shadow-warm-sm"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-linen-300 bg-white text-ink-muted transition-all duration-200 hover:border-primary hover:bg-primary hover:text-white hover:shadow-warm-sm"
                 >
                   <ArrowLeft size={16} />
                 </button>
@@ -148,7 +153,7 @@ export default function TestimonialsSection() {
                   type="button"
                   onClick={next}
                   aria-label="Testimonianza successiva"
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-linen-300 bg-white text-ink-muted transition-all duration-200 hover:border-forest hover:bg-forest hover:text-white hover:shadow-warm-sm"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-linen-300 bg-white text-ink-muted transition-all duration-200 hover:border-primary hover:bg-primary hover:text-white hover:shadow-warm-sm"
                 >
                   <ArrowRight size={16} />
                 </button>
@@ -160,7 +165,7 @@ export default function TestimonialsSection() {
                   { val: '100%', label: 'Famiglie soddisfatte' },
                 ].map(({ val, label }) => (
                   <div key={label} className="flex items-center gap-4">
-                    <span className="font-display text-2xl font-bold text-forest">{val}</span>
+                    <span className="font-sans text-2xl font-bold text-primary">{val}</span>
                     <span className="font-sans text-xs leading-snug text-ink-muted">{label}</span>
                   </div>
                 ))}
@@ -187,7 +192,7 @@ export default function TestimonialsSection() {
                 className="flex flex-1 flex-col"
               >
                 <p
-                  className="font-display italic leading-[1.5] text-ink"
+                  className="font-sans italic leading-[1.5] text-ink"
                   style={{ fontSize: 'clamp(1.15rem, 4.2vw, 2.3rem)', letterSpacing: '-0.01em' }}
                 >
                   &ldquo;{t.text}&rdquo;
@@ -217,7 +222,7 @@ export default function TestimonialsSection() {
                   className="h-2 rounded-full transition-all duration-300"
                   style={{
                     width: i === cur ? 28 : 8,
-                    background: i === cur ? '#C9A84C' : '#D4CFC7',
+                    background: i === cur ? brand.yellow.accent : 'var(--color-linen, #D4CFC7)',
                   }}
                 />
               ))}
@@ -225,6 +230,7 @@ export default function TestimonialsSection() {
           </div>
         </div>
       </div>
+      </SectionPastelBg>
     </section>
   );
 }

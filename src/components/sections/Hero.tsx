@@ -4,25 +4,92 @@ import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Phone, MessageCircle, ArrowDown } from 'lucide-react';
-import { siteConfig } from '@/data/content';
+import { siteConfig, heroContent, heroSlides, structureInfo } from '@/data/content';
+import { FlowButton } from '@/components/ui/flow-button';
 
-const slides = [
-  { src: '/images/6vg.webp',                          alt: 'Terrazza residenza anziani Cabiate — Residence V.G',           caption: 'La terrazza, aperta ogni mattina' },
-  { src: '/images/foto_orizzontali/IMG_2382.webp',     alt: 'Vita quotidiana casa famiglia anziani Como',                    caption: 'Momenti veri, ogni pomeriggio' },
-  { src: '/images/4vg.webp',                          alt: 'Camera struttura anziani autosufficienti Cabiate',              caption: 'Il tuo spazio, la tua luce' },
-  { src: '/images/foto_orizzontali/IMG_2387.webp',     alt: 'Attività motoria residenza anziani Cabiate',                   caption: 'Movimento, vitalità, buonumore' },
-  { src: '/images/3vg.webp',                          alt: 'Sala pranzo casa famiglia anziani Como',                        caption: 'A tavola, ogni giorno insieme' },
-];
+const slides = heroSlides;
+
+const WORD_EASE = [0.16, 1, 0.3, 1] as const;
+const WORD_DURATION = 0.6;
+const WORD_STAGGER = 0.08;
+const WORD_BASE_DELAY = 0.45;
+
+type WordRevealProps = {
+  words: string[];
+  startIndex?: number;
+  className?: string;
+};
+
+function WordReveal({ words, startIndex = 0, className }: WordRevealProps) {
+  return (
+    <>
+      {words.map((word, i) => (
+        <motion.span
+          key={`${startIndex + i}-${word}`}
+          initial={{ opacity: 0, y: 22 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: WORD_DURATION,
+            delay: WORD_BASE_DELAY + (startIndex + i) * WORD_STAGGER,
+            ease: WORD_EASE,
+          }}
+          className={className}
+          style={{ display: 'inline-block', marginRight: i < words.length - 1 ? '0.28em' : undefined }}
+        >
+          {word}
+        </motion.span>
+      ))}
+    </>
+  );
+}
+
+type HeadlineRevealProps = {
+  lines: readonly string[];
+  accent: string;
+  className?: string;
+  accentClassName?: string;
+};
+
+function HeadlineReveal({ lines, accent, className, accentClassName }: HeadlineRevealProps) {
+  const lineWords = lines.map((line) => line.split(/\s+/));
+  const accentWords = accent.split(/\s+/);
+  const accentStart = lineWords.reduce((sum, words) => sum + words.length, 0);
+
+  return (
+    <>
+      {lineWords.map((words, lineIdx) => {
+        const startIndex = lineWords.slice(0, lineIdx).reduce((sum, w) => sum + w.length, 0);
+        return (
+          <span key={lineIdx} style={{ display: 'block' }}>
+            <WordReveal words={words} startIndex={startIndex} className={className} />
+          </span>
+        );
+      })}
+      <span style={{ display: 'block' }}>
+        <WordReveal words={accentWords} startIndex={accentStart} className={accentClassName} />
+      </span>
+    </>
+  );
+}
 
 export default function Hero() {
   const [current, setCurrent] = useState(0);
-  const [prev, setPrev] = useState<number | null>(null);
+  const [mounted, setMounted] = useState(false);
   const prefersReduced = useReducedMotion();
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  const taglineWords = siteConfig.tagline.split(/\s+/);
+  const mobileHeadlineWordCount =
+    heroContent.headline.join(' ').split(/\s+/).length +
+    heroContent.headlineAccent.split(/\s+/).length;
+  const mobileContentDelay = WORD_BASE_DELAY + mobileHeadlineWordCount * WORD_STAGGER + 0.15;
+  const desktopContentDelay = WORD_BASE_DELAY + taglineWords.length * WORD_STAGGER + 0.15;
+
   const advance = useCallback(() => {
-    setPrev(current);
     setCurrent((c) => (c + 1) % slides.length);
-  }, [current]);
+  }, []);
 
   useEffect(() => {
     if (prefersReduced) return;
@@ -33,8 +100,9 @@ export default function Hero() {
   return (
     <section className="relative flex min-h-[100dvh] flex-col overflow-hidden" aria-label="Benvenuto">
       <h1 className="sr-only">
-        Residenza per Anziani Autosufficienti a Cabiate (Como) - Residence V.G
+        {siteConfig.seo.defaultTitle}
       </h1>
+
       {/* ── Carousel background ── */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence initial={false}>
@@ -57,12 +125,11 @@ export default function Hero() {
           </motion.div>
         </AnimatePresence>
 
-        {/* Mobile: lighter gradient, content readable from bottom */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/80 md:hidden" />
-        {/* Desktop: cinematic grade overlay */}
-        <div className="absolute inset-0 hidden bg-gradient-to-b from-black/60 via-black/25 to-black/75 md:block" />
-        <div className="absolute inset-0 hidden bg-gradient-to-r from-black/30 via-transparent to-black/20 md:block" />
-        <div className="absolute inset-0 opacity-20 mix-blend-overlay" style={{ background: 'radial-gradient(ellipse at 30% 50%, rgba(201,168,76,0.15) 0%, transparent 60%)' }} />
+        {/* Overlay gradiente caldo (marrone scuro → trasparente) */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/10 to-black/82 md:hidden" />
+        <div className="absolute inset-0 hidden bg-gradient-to-b from-black/60 via-black/25 to-black/78 md:block" />
+        <div className="absolute inset-0 hidden bg-gradient-to-r from-black/35 via-transparent to-black/20 md:block" />
+        <div className="absolute inset-0 opacity-20 mix-blend-overlay" style={{ background: 'radial-gradient(ellipse at 30% 50%, rgba(232,118,10,0.15) 0%, transparent 60%)' }} />
       </div>
 
       {/* ── Slide indicators ── */}
@@ -70,9 +137,9 @@ export default function Hero() {
         {slides.map((_, i) => (
           <button
             key={i}
-            onClick={() => { setPrev(current); setCurrent(i); }}
+            onClick={() => setCurrent(i)}
             aria-label={`Slide ${i + 1}`}
-            className={`h-0.5 rounded-full transition-all duration-500 ${i === current ? 'w-8 bg-gold' : 'w-2.5 bg-white/35 hover:bg-white/60'}`}
+            className={`h-0.5 rounded-full transition-all duration-500 ${i === current ? 'w-8 bg-primary' : 'w-2.5 bg-white/35 hover:bg-white/60'}`}
           />
         ))}
       </div>
@@ -85,83 +152,102 @@ export default function Hero() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 12 }}
           transition={{ duration: 0.6 }}
-          className="absolute bottom-24 left-6 z-20 hidden font-display text-sm italic text-white/50 md:left-12 md:block"
+          className="absolute bottom-24 left-6 z-20 hidden font-sans text-sm italic text-white/50 md:left-12 md:block"
         >
           {slides[current].caption}
         </motion.p>
       </AnimatePresence>
 
-      {/* ── MOBILE content — minimal, bottom-left ── */}
+      {/* ── MOBILE content ── */}
       <div className="md:hidden relative z-10 flex flex-1 flex-col justify-end px-6 pb-28">
+
+        {/* Logo mobile */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, ease: [0.34, 1.56, 0.64, 1] }}
+          className="mb-5 flex justify-center"
+        >
+          <Image
+            src="/images/logo-allegramente.png"
+            alt="AllegraMente"
+            width={120}
+            height={120}
+            className="drop-shadow-2xl"
+            priority
+          />
+        </motion.div>
+
         {/* Tag */}
         <motion.p
           initial={{ opacity: 0, x: -12 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mb-4 flex items-center gap-2 font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-gold/80"
+          className="mb-4 flex items-center gap-2 font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-primary/80"
         >
-          <span className="h-px w-5 bg-gold/60" />
-          Residenza per anziani autosufficienti · Cabiate
+          <span className="h-px w-5 bg-primary/60" />
+          Residenza per anziani autosufficienti · {siteConfig.contact.address.city}
         </motion.p>
 
-        {/* Headline */}
+        {/* Headline — word-by-word reveal */}
         <h2
-          className="font-display font-semibold text-white"
-          style={{ fontSize: 'clamp(2.8rem, 13vw, 4rem)', lineHeight: 1.04, letterSpacing: '-0.03em' }}
+          className="font-display font-bold text-white"
+          style={{ fontSize: 'clamp(2.8rem, 13vw, 4rem)', lineHeight: 1.04, letterSpacing: '-0.02em' }}
         >
-          {['Libertà,', 'accoglienza.'].map((word, i) => (
-            <motion.span
-              key={word}
-              initial={{ opacity: 0, y: 28 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: 0.45 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              style={{ display: 'block' }}
-            >
-              {word}
-            </motion.span>
-          ))}
+          {!mounted || prefersReduced ? (
+            <>
+              {heroContent.headline.map((line) => (
+                <span key={line} className="block text-white">
+                  {line}
+                </span>
+              ))}
+              <span className="block text-primary">{heroContent.headlineAccent}</span>
+            </>
+          ) : (
+            <HeadlineReveal
+              lines={heroContent.headline}
+              accent={heroContent.headlineAccent}
+              className="text-white"
+              accentClassName="text-primary"
+            />
+          )}
         </h2>
 
-        {/* Gold divider */}
+        {/* Divider */}
         <motion.div
           initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 0.5, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
-          className="my-5 h-px w-10 origin-left rounded-full bg-gold/50"
+          animate={mounted ? { scaleX: 1 } : { scaleX: 0 }}
+          transition={{ duration: 0.5, delay: mobileContentDelay, ease: WORD_EASE }}
+          className="my-5 h-1 w-10 origin-left rounded-full bg-primary/50"
         />
 
-        {/* Sub */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.7, delay: 0.9 }}
-          className="mb-7 font-sans text-base leading-relaxed text-white/65"
-        >
-          Per anziani autosufficienti. Max&nbsp;10 ospiti,<br />ogni persona conosciuta per nome.
-        </motion.p>
-
         {/* CTA */}
-        <motion.a
-          href={`tel:${siteConfig.contact.phoneRaw}`}
+        <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.05 }}
-          className="btn-primary self-start"
+          transition={{ duration: 0.6, delay: mobileContentDelay + 0.15 }}
+          className="self-start"
         >
-          <Phone size={14} strokeWidth={2.5} />
-          Chiama ora
-        </motion.a>
+          <FlowButton
+            as="a"
+            href={siteConfig.contact.phoneRaw ? `tel:${siteConfig.contact.phoneRaw}` : '/#contatti'}
+            icon={<Phone size={14} strokeWidth={2.5} />}
+            iconPosition="left"
+          >
+            Parla con {siteConfig.contact.phoneContact}
+          </FlowButton>
+        </motion.div>
 
         {/* Micro trust */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.3 }}
+          transition={{ duration: 0.6, delay: mobileContentDelay + 0.35 }}
           className="mt-5 flex items-center gap-4"
         >
-          {['Assistenza H24', 'Pasti freschi', 'Max 10 ospiti'].map((b) => (
-            <span key={b} className="flex items-center gap-1.5 font-sans text-[11px] text-white/40">
-              <span className="text-gold/60">·</span> {b}
+          {['Badanti H24', 'Cucina mediterranea', `Max ${structureInfo.ospiti} ospiti`].map((b) => (
+            <span key={b} className="flex items-center gap-1.5 font-sans text-[11px] text-white/45">
+              <span className="text-primary/70">·</span> {b}
             </span>
           ))}
         </motion.div>
@@ -170,67 +256,67 @@ export default function Hero() {
       {/* ── DESKTOP content — centered ── */}
       <div className="container-site relative z-10 hidden flex-1 flex-col items-center justify-center py-32 text-center md:flex">
 
-        {/* Eyebrow */}
+        {/* Logo desktop — grande e prominente */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.85 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-8 flex justify-center"
+        >
+          <Image
+            src="/images/logo-allegramente.png"
+            alt="AllegraMente"
+            width={180}
+            height={180}
+            className="drop-shadow-2xl"
+            priority
+          />
+        </motion.div>
+
+        {/* Eyebrow pill */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-gold/40 bg-black/25 px-5 py-2 backdrop-blur-md"
+          className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-primary/40 bg-black/25 px-5 py-2 backdrop-blur-md"
         >
-          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-gold" />
-          <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-gold/90">
-            Cabiate · Como · Anziani autosufficienti · Max 10 ospiti
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
+          <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/90">
+            {siteConfig.contact.address.city} · Canavese · Anziani autosufficienti · Max {structureInfo.ospiti} ospiti
           </span>
         </motion.div>
 
-        {/* Headline — word reveal */}
+        {/* Headline — word-by-word reveal */}
         <h2
-          className="font-display font-semibold text-white text-balance"
+          className="font-display font-bold text-white text-balance"
           style={{ fontSize: 'clamp(3rem, 7.5vw, 5.5rem)', lineHeight: 1.06, letterSpacing: '-0.025em' }}
         >
-          {['Libertà,', 'accoglienza,', 'empatia', 'e rispetto'].map((word, i) => (
-            <motion.span
-              key={word}
-              initial={{ opacity: 0, y: 32, rotateX: 20 }}
-              animate={{ opacity: 1, y: 0, rotateX: 0 }}
-              transition={{ duration: 0.7, delay: 0.4 + i * 0.12, ease: [0.16, 1, 0.3, 1] }}
-              style={{ display: 'inline-block', marginRight: '0.22em', transformOrigin: 'bottom' }}
-            >
-              {word}
-            </motion.span>
-          ))}
+          {!mounted || prefersReduced ? (
+            <span className="text-white">{siteConfig.tagline}</span>
+          ) : (
+            <WordReveal words={taglineWords} className="text-white" />
+          )}
         </h2>
-
-        {/* Sub */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.0 }}
-          className="mx-auto mt-7 max-w-lg font-sans text-lg leading-relaxed text-white/75 md:text-xl"
-        >
-          Una residenza per anziani autosufficienti a Cabiate, con max&nbsp;10 ospiti.
-          Assistenza discreta, sempre presente, mai invasiva.
-        </motion.p>
 
         {/* CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 1.2 }}
+          transition={{ duration: 0.7, delay: desktopContentDelay }}
           className="mt-10 flex flex-col items-center gap-4 sm:flex-row"
         >
-          <a href={`tel:${siteConfig.contact.phoneRaw}`} className="btn-primary group">
-            <Phone size={15} strokeWidth={2.5} className="transition-transform duration-300 group-hover:rotate-12" />
-            Chiama ora — {siteConfig.contact.phone}
-            <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+          <a href={siteConfig.contact.phoneRaw ? `tel:${siteConfig.contact.phoneRaw}` : '/#contatti'}>
+            <FlowButton as="span" icon={<Phone size={15} strokeWidth={2.5} />} iconPosition="left">
+              {siteConfig.contact.phoneRaw ? siteConfig.contact.phoneCtaLabel : 'Contattaci'}
+            </FlowButton>
           </a>
           <a
-            href={`https://wa.me/${siteConfig.contact.whatsapp}?text=Buongiorno%2C%20vorrei%20informazioni%20su%20Residence%20V.G`}
+            href={`https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(`Buongiorno, vorrei informazioni su ${siteConfig.name}`)}`}
             target="_blank" rel="noopener noreferrer"
-            className="btn-ghost-white"
           >
-            <MessageCircle size={15} />
-            Scrivici su WhatsApp
+            <FlowButton as="span" icon={<MessageCircle size={15} />} iconPosition="left">
+              Scrivici su WhatsApp
+            </FlowButton>
           </a>
         </motion.div>
 
@@ -238,12 +324,12 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.6 }}
+          transition={{ duration: 0.8, delay: desktopContentDelay + 0.4 }}
           className="mt-14 flex flex-wrap justify-center gap-x-8 gap-y-3"
         >
-          {['Assistenza discreta 24 ore su 24', 'Pasti freschi ogni giorno', 'Progetto di vita individuale', 'Max 10 ospiti'].map((b) => (
+          {['Badanti H24', 'Cucina mediterranea', 'Villa senza barriere', `Max ${structureInfo.ospiti} ospiti`].map((b) => (
             <span key={b} className="flex items-center gap-2 font-sans text-sm text-white/60">
-              <span className="text-gold">✦</span> {b}
+              <span className="text-primary">✦</span> {b}
             </span>
           ))}
         </motion.div>
@@ -260,7 +346,7 @@ export default function Hero() {
         <motion.div
           animate={prefersReduced ? {} : { y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-          className="flex flex-col items-center gap-1.5 text-white/30"
+          className="flex flex-col items-center gap-1.5 text-white/35"
         >
           <span className="font-sans text-[10px] uppercase tracking-widest">Scorri</span>
           <ArrowDown size={16} />

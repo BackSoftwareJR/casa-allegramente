@@ -1,6 +1,7 @@
-import { Suspense } from 'react';
+'use client';
+
 import Script from 'next/script';
-import GAPageViewTracker from './GAPageViewTracker';
+import GAPageViewTracker from '@/components/GAPageViewTracker';
 
 const GA_MEASUREMENT_ID = 'G-PPG322967R';
 
@@ -17,13 +18,12 @@ export default function GoogleAnalytics() {
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', '${GA_MEASUREMENT_ID}', {
-            send_page_view: true
+            send_page_view: true,
+            anonymize_ip: true
           });
         `}
       </Script>
-      <Suspense fallback={null}>
-        <GAPageViewTracker measurementId={GA_MEASUREMENT_ID} />
-      </Suspense>
+      <GAPageViewTracker measurementId={GA_MEASUREMENT_ID} />
     </>
   );
 }

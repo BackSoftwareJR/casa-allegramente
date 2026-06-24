@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /_next/
-Sitemap: https://vgresidence.com/sitemap.xml
+Disallow: /blog/
+
+Sitemap: https://www.casaallegramente.it/sitemap.xml

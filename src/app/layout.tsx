@@ -1,26 +1,25 @@
 import type { Metadata, Viewport } from 'next';
-import dynamic from 'next/dynamic';
-import { Cormorant_Garamond, Inter } from 'next/font/google';
+import { Nunito, Source_Sans_3 } from 'next/font/google';
 import './globals.css';
 import { siteConfig } from '@/data/content';
 import { CANONICAL_BASE } from '@/lib/seo';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
+import PastelBackground from '@/components/ui/PastelBackground';
+import FloatingCTA from '@/components/FloatingCTA';
 
-const FloatingCTA = dynamic(() => import('@/components/FloatingCTA'), { ssr: false });
-
-const display = Cormorant_Garamond({
+const display = Nunito({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '600', '700', '800'],
   variable: '--font-display',
   display: 'swap',
   preload: true,
 });
 
-const sans = Inter({
+const sans = Source_Sans_3({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  weight: ['300', '400', '600'],
   variable: '--font-sans',
   display: 'swap',
 });
@@ -50,8 +49,8 @@ export const metadata: Metadata = {
     images: [siteConfig.seo.ogImage],
   },
   icons: {
-    icon: '/images/favicon.png',
-    apple: '/images/favicon.png',
+    icon: '/images/logo-allegramente.png',
+    apple: '/images/logo-allegramente.png',
   },
   robots: {
     index: true,
@@ -64,7 +63,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: siteConfig.seo.themeColor,
+  themeColor: '#E8956A',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -76,6 +75,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <GoogleAnalytics />
+        <PastelBackground />
         <a href="#main-content" className="skip-link">
           Vai al contenuto principale
         </a>

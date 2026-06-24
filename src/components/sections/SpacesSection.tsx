@@ -4,47 +4,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Phone, ArrowUpRight } from 'lucide-react';
-import { siteConfig } from '@/data/content';
+import { siteConfig, spacesAccordion, spacesSectionContent } from '@/data/content';
+import { brand } from '@/lib/brand-colors';
+import SectionPastelBg from '@/components/ui/SectionPastelBg';
 import { ImageAccordion, type AccordionImageItem } from '@/components/ui/interactive-image-accordion';
 import { staggerContainer, fadeUp, viewportOptions } from '@/lib/animations';
 
-const spaces: AccordionImageItem[] = [
-  {
-    id: 1,
-    title: 'La tua camera',
-    subtitle: 'Il tuo spazio, le tue cose, il tuo ritmo.',
-    src: '/images/7vg.webp',
-    alt: 'Camera con terrazzo Residence V.G — la porta aperta sul verde',
-  },
-  {
-    id: 2,
-    title: 'La sala comune',
-    subtitle: 'Dove ci si trova, si chiacchiera, si vive insieme.',
-    src: '/images/foto_orizzontali/IMG_2382.webp',
-    alt: 'Sala comune Residence V.G — ospiti e operatori nel pomeriggio',
-  },
-  {
-    id: 3,
-    title: 'La terrazza',
-    subtitle: 'Aria aperta, vista sul verde, ogni giorno.',
-    src: '/images/6vg.webp',
-    alt: 'Terrazza Residence V.G — arredata con vista su Cabiate',
-  },
-  {
-    id: 4,
-    title: 'La sala pranzo',
-    subtitle: 'A tavola insieme, ogni giorno.',
-    src: '/images/3vg.webp',
-    alt: 'Sala pranzo Residence V.G — apparecchiata e luminosa',
-  },
-  {
-    id: 5,
-    title: 'La cura quotidiana',
-    subtitle: 'Assistenza H24, senza sembrare un ospedale.',
-    src: '/images/foto_orizzontali/IMG_2384.webp',
-    alt: 'Assistenza Residence V.G — cura e presenza ogni giorno',
-  },
-];
+const spaces: AccordionImageItem[] = [...spacesAccordion];
 
 /* Mobile: tap-to-expand single image with thumbnail strip */
 function SpacesMobile() {
@@ -59,18 +25,20 @@ function SpacesMobile() {
         className="px-6 pb-8 pt-14"
       >
         <motion.p variants={fadeUp} className="font-sans text-sm font-semibold uppercase tracking-[0.15em] text-gold-700">
-          I nostri spazi
+          {spacesSectionContent.eyebrow}
         </motion.p>
         <motion.h2
           variants={fadeUp}
           className="mt-3 font-display font-semibold text-forest text-balance"
           style={{ fontSize: 'clamp(2rem, 7vw, 2.8rem)', letterSpacing: '-0.02em', lineHeight: 1.08 }}
         >
-          Ogni angolo<br />racconta casa.
+          {spacesSectionContent.title.split('\n').map((line, i) => (
+            <span key={line}>{line}{i === 0 && <br />}</span>
+          ))}
         </motion.h2>
         <motion.div variants={fadeUp} className="mt-4 gold-line" />
         <motion.p variants={fadeUp} className="mt-4 font-sans text-sm leading-relaxed text-ink-light">
-          Non un corridoio d&apos;ospedale. Una palazzina vera, con spazi pensati per la vita di tutti i giorni.
+          {spacesSectionContent.description}
         </motion.p>
       </motion.div>
 
@@ -92,7 +60,7 @@ function SpacesMobile() {
               className="object-cover transition-transform duration-700 group-hover:scale-105"
               sizes="100vw"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-forest/65 via-forest/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/15 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-4">
               <p className="font-sans text-sm font-semibold text-white">{space.title}</p>
               <p className="mt-0.5 font-sans text-xs text-white/55">{space.subtitle}</p>
@@ -130,20 +98,21 @@ function SpacesDesktop() {
           className="max-w-sm"
         >
           <motion.p variants={fadeUp} className="font-sans text-sm font-semibold uppercase tracking-[0.15em] text-gold-700">
-            I nostri spazi
+            {spacesSectionContent.eyebrow}
           </motion.p>
           <motion.h2
             variants={fadeUp}
             className="mt-3 font-display font-semibold text-forest text-balance"
             style={{ fontSize: 'clamp(2.2rem, 4vw, 3.2rem)', letterSpacing: '-0.025em', lineHeight: 1.06 }}
           >
-            Ogni angolo<br />racconta casa.
+            {spacesSectionContent.title.split('\n').map((line, i) => (
+              <span key={line}>{line}{i === 0 && <br />}</span>
+            ))}
           </motion.h2>
           <motion.div variants={fadeUp} className="mt-5 gold-line" />
 
           <motion.p variants={fadeUp} className="mt-6 font-sans text-base leading-[1.8] text-ink-light">
-            Non un corridoio d&apos;ospedale. Una palazzina vera a Cabiate, con spazi pensati per vivere,
-            non per sopravvivere. Passa il mouse sulle immagini per scoprirli.
+            {spacesSectionContent.description} Le immagini scorrono in automatico — passa il mouse per esplorarle.
           </motion.p>
 
           <motion.div variants={fadeUp} className="mt-8 flex flex-col gap-3">
@@ -156,7 +125,7 @@ function SpacesDesktop() {
             </a>
             <Link
               href="/galleria"
-              className="inline-flex items-center gap-2 font-sans text-sm font-medium text-ink-muted transition-colors hover:text-forest"
+              className="inline-flex items-center gap-2 font-sans text-sm font-medium text-ink-muted transition-colors hover:text-warm-brown"
             >
               <ArrowUpRight size={14} />
               Tutta la galleria
@@ -178,8 +147,10 @@ function SpacesDesktop() {
         >
           <ImageAccordion
             items={spaces}
-            accent="#C9A84C"
-            defaultActive={2}
+            accent={brand.orange.accent}
+            defaultActive={0}
+            autoPlay
+            autoPlayInterval={6500}
           />
         </motion.div>
       </div>
@@ -192,8 +163,9 @@ export default function SpacesSection() {
     <section
       id="spazi"
       aria-label="I nostri spazi"
-      className="relative overflow-hidden bg-white"
+      className="relative overflow-hidden bg-transparent"
     >
+      <SectionPastelBg hue="yellow">
       {/* Subtle top separator */}
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-linen-300 to-transparent" />
 
@@ -201,6 +173,7 @@ export default function SpacesSection() {
       <SpacesMobile />
 
       <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-linen-300 to-transparent" />
+      </SectionPastelBg>
     </section>
   );
 }

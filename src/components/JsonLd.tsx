@@ -1,4 +1,5 @@
-import { siteConfig, testimonials } from '@/data/content';
+import { siteConfig, testimonials, assets } from '@/data/content';
+import { CANONICAL_BASE } from '@/lib/seo';
 
 interface JsonLdScriptProps {
   data: Record<string, unknown> | Record<string, unknown>[];
@@ -65,7 +66,7 @@ export function OrganizationSchema() {
     name: siteConfig.nameFull,
     alternateName: siteConfig.name,
     url: siteConfig.url,
-    logo: `${siteConfig.url}/images/logo_cabiate.png`,
+    logo: `${siteConfig.url}${assets.logo}`,
     email: siteConfig.contact.email,
     telephone: siteConfig.contact.phone,
     address: addressSchema,
@@ -113,7 +114,7 @@ export function BreadcrumbListSchema({ items }: { items: BreadcrumbItem[] }) {
       '@type': 'ListItem',
       position: index + 1,
       name: item.name,
-      item: item.path.startsWith('http') ? item.path : `https://vgresidence.com${item.path}`,
+      item: item.path.startsWith('http') ? item.path : `${CANONICAL_BASE}${item.path}`,
     })),
   };
 
@@ -139,14 +140,14 @@ export function ArticleSchema({
   author,
   image,
 }: ArticleSchemaProps) {
-  const imageUrl = image.startsWith('http') ? image : `https://vgresidence.com${image}`;
+  const imageUrl = image.startsWith('http') ? image : `${CANONICAL_BASE}${image}`;
 
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: title,
     description,
-    url: `https://vgresidence.com/blog/${slug}`,
+    url: `${CANONICAL_BASE}/blog/${slug}`,
     datePublished,
     dateModified: dateModified ?? datePublished,
     author: {
@@ -158,13 +159,13 @@ export function ArticleSchema({
       name: siteConfig.nameFull,
       logo: {
         '@type': 'ImageObject',
-        url: `${siteConfig.url}/images/logo_cabiate.png`,
+        url: `${siteConfig.url}${assets.logo}`,
       },
     },
     image: imageUrl,
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://vgresidence.com/blog/${slug}`,
+      '@id': `${CANONICAL_BASE}/blog/${slug}`,
     },
   };
 

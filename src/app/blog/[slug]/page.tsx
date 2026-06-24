@@ -33,13 +33,14 @@ export function generateMetadata({ params }: PageProps): Metadata {
   if (!post) return {};
 
   return createArticleMetadata({
-    title: `${post.title} | Residence V.G`,
+    title: `${post.title} | Casa Allegramente`,
     description: post.description,
     path: `/blog/${post.slug}`,
     keywords: post.keywords,
     ogImage: post.image,
     publishedTime: post.date,
     modifiedTime: post.lastModified,
+    noIndex: true,
   });
 }
 

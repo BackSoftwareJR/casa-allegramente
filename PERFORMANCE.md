@@ -1,4 +1,4 @@
-# Performance — Residence V.G
+# Performance — bsbsbsbsbs
 
 Audit e ottimizzazioni tecniche per Core Web Vitals, SEO speed e UX percepita. Nessuna modifica a design, colori o copy.
 
@@ -69,4 +69,4 @@ npm run build   # deve completare senza errori
 npm run start   # test locale opzionale
 ```
 
-Dopo deploy: [PageSpeed Insights](https://pagespeed.web.dev/) su `https://vgresidence.com`.
+Dopo deploy: [PageSpeed Insights](https://pagespeed.web.dev/) su `https://TODO-sostituire-dominio.it`.

@@ -1,13 +1,13 @@
-# Residence V.G — Brief Completo Redesign
+# bsbsbsbsbs — Brief Completo Redesign
 **Versione:** 1.0 · **Data:** Maggio 2026  
-**Cliente:** Residence per Anziani Group V.G, Cabiate (CO)  
-**Dominio:** [www.vgresidence.com](https://www.vgresidence.com)
+**Cliente:** bsbsbsbsbs, TODO_CITTA (TODO)  
+**Dominio:** [TODO-sostituire-dominio.it](https://TODO-sostituire-dominio.it)
 
 ---
 
 ## 1. Panoramica progetto
 
-Questo workspace contiene tutto il necessario per sviluppare il **nuovo sito da zero** di Residence V.G — una residenza per anziani familiare a Cabiate (CO).
+Questo workspace contiene tutto il necessario per sviluppare il **nuovo sito da zero** di bsbsbsbsbs — una residenza per anziani familiare a TODO_CITTA (TODO).
 
 Il sito precedente esisteva (in `../residence_vg/`) ed è stato analizzato in profondità. Qui trovi:
 - ✅ Tutti gli **asset** (immagini, loghi, video) già copiati in `public/`
@@ -26,10 +26,10 @@ Sviluppare **completamente da zero** il nuovo sito seguendo questo brief, il des
 
 | Campo | Valore |
 |-------|--------|
-| Nome breve | **Residence V.G** |
-| Nome completo | Residence per Anziani Group V.G |
+| Nome breve | **bsbsbsbsbs** |
+| Nome completo | bsbsbsbsbs |
 | Tagline ufficiale | *Libertà, accoglienza, empatia e rispetto* |
-| Territorio | Cabiate (CO), Brianza, Lago di Como |
+| Territorio | TODO_CITTA (TODO), Brianza, Lago di Como |
 | Target primario | Anziani over 65, autosufficienti / parzialmente autosufficienti |
 | Target secondario | Familiari che cercano la struttura per un proprio caro |
 | Tono di comunicazione | Caldo, rassicurante, professionale, mai clinico |
@@ -46,12 +46,12 @@ Sviluppare **completamente da zero** il nuovo sito seguendo questo brief, il des
 
 | Campo | Valore |
 |-------|--------|
-| **Telefono** | 035 195 812 35 |
-| **WhatsApp** | +39 351 958 1235 |
-| **Email** | vggroupsrl@gmail.com |
-| **Indirizzo** | Via Francesco Petrarca **14**, 22060 Cabiate (CO) |
+| **Telefono** | TODO TELEFONO |
+| **WhatsApp** | +39 TODO TELEFONO |
+| **Email** | TODO@sostituire.it |
+| **Indirizzo** | TODO Via **14**, 22060 TODO_CITTA (TODO) |
 | **Numero ospiti MAX** | **10** (NON 5 — era un errore nel vecchio blog) |
-| **P.IVA** | 14407090969 |
+| **P.IVA** | TODO_PIVA |
 | **Orari** | Lun–Dom 09:00–20:00 |
 | **Geo** | Lat: 45.674 / Lng: 9.107 |
 
@@ -257,7 +257,7 @@ const containerVariants = {
 ### Loghi e icone
 | File | Path | Uso |
 |------|------|-----|
-| Logo principale | `/public/images/logo_cabiate.png` | Header, footer, OG |
+| Logo principale | `/public/images/logo.png` | Header, footer, OG |
 | Logo alternativo | `/public/images/logo.jpg` | Backup |
 | Favicon | `/public/images/favicon.png` | Browser tab |
 
@@ -331,7 +331,7 @@ const containerVariants = {
   Informativa utenti sito web CASA ANZIANI.pdf  ← rinominare con brand V.G!
   Cookie policy CASA ANZIANI.pdf                ← rinominare con brand V.G!
 ```
-⚠️ I PDF hanno ancora il vecchio brand "CASA ANZIANI". Chiedere al cliente PDF aggiornati con brand Residence V.G.
+⚠️ I PDF hanno ancora il vecchio brand "CASA ANZIANI". Chiedere al cliente PDF aggiornati con brand bsbsbsbsbs.
 
 ---
 
@@ -342,7 +342,7 @@ Tutti i contenuti sono in `src/data/content.ts`. Qui il riepilogo.
 ### Testi hero
 ```
 Headline: "Libertà, accoglienza, empatia e rispetto"
-Subline:  "Residence per anziani a Cabiate. Una casa vera, con max 10 ospiti,
+Subline:  "Residence per anziani a TODO_CITTA. Una casa vera, con max 10 ospiti,
            assistenza 24h e un progetto di vita pensato per te."
 CTA 1:    "Prenota una visita"
 CTA 2:    "Scopri i servizi"
@@ -350,8 +350,8 @@ CTA 2:    "Scopri i servizi"
 
 ### Testo Chi siamo (da espandere con il cliente)
 ```
-Residence V.G è una struttura residenziale per anziani autosufficienti e 
-parzialmente autosufficienti situata a Cabiate, in provincia di Como.
+bsbsbsbsbs è una struttura residenziale per anziani autosufficienti e 
+parzialmente autosufficienti situata a TODO_CITTA, in provincia di Como.
 
 Siamo una palazzina di tre piani con un massimo di 10 ospiti: una scelta 
 precisa, non un limite. La piccola dimensione ci permette di conoscere 
@@ -413,14 +413,14 @@ Correggere in `src/data/blog/articles.ts` tutti i riferimenti.
 {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "name": "Residence V.G",
-  "url": "https://www.vgresidence.com",
+  "name": "bsbsbsbsbs",
+  "url": "https://TODO-sostituire-dominio.it",
   "telephone": "0351958 1235",
-  "email": "vggroupsrl@gmail.com",
+  "email": "TODO@sostituire.it",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "Via Francesco Petrarca, 14",
-    "addressLocality": "Cabiate",
+    "streetAddress": "TODO Via, Numero Civico",
+    "addressLocality": "TODO_CITTA",
     "addressRegion": "CO",
     "postalCode": "22060",
     "addressCountry": "IT"
@@ -436,7 +436,7 @@ Correggere in `src/data/blog/articles.ts` tutti i riferimenti.
     "opens": "09:00",
     "closes": "20:00"
   }],
-  "image": "https://www.vgresidence.com/images/hero-fallback.jpg"
+  "image": "https://TODO-sostituire-dominio.it/images/hero-fallback.jpg"
 }
 ```
 
@@ -446,9 +446,9 @@ Correggere in `src/data/blog/articles.ts` tutti i riferimenti.
 ```tsx
 // app/layout.tsx
 export const metadata: Metadata = {
-  title: { template: '%s | Residence V.G Cabiate', default: 'Residence V.G — Casa per Anziani a Cabiate (CO)' },
-  description: 'Residence per anziani a Cabiate, provincia di Como. Assistenza 24h, max 10 ospiti, ambiente familiare. Chiama: 035 195 812 35.',
-  metadataBase: new URL('https://www.vgresidence.com'),
+  title: { template: '%s | bsbsbsbsbs TODO_CITTA', default: 'bsbsbsbsbs — Casa per Anziani a TODO_CITTA (TODO)' },
+  description: 'Residence per anziani a TODO_CITTA, provincia di Como. Assistenza 24h, max 10 ospiti, ambiente familiare. Chiama: TODO TELEFONO.',
+  metadataBase: new URL('https://TODO-sostituire-dominio.it'),
   openGraph: { ... },
   twitter: { card: 'summary_large_image' },
 }
@@ -479,7 +479,7 @@ Comportamento:
 ### API route da creare
 ```
 POST /api/contact
-  → Invia email a vggroupsrl@gmail.com (SMTP)
+  → Invia email a TODO@sostituire.it (SMTP)
   → Salva in DB (opzionale — come nel vecchio sito)
   → Risponde { success: true } o { error: string }
 ```

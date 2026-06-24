@@ -4,7 +4,8 @@ import { fileURLToPath } from 'url';
 import matter from 'gray-matter';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const BASE = 'https://vgresidence.com';
+// ⚠️ SOSTITUIRE: imposta NEXT_PUBLIC_SITE_URL in .env.local o modifica il fallback
+const BASE = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.casaallegramente.it').replace(/\/$/, '');
 const BLOG_DIR = path.join(__dirname, '../content/blog');
 const outputPath = path.join(__dirname, '../public/sitemap.xml');
 
@@ -12,6 +13,7 @@ const mainPages = [
   { loc: BASE, changefreq: 'weekly', priority: '1.0' },
   { loc: `${BASE}/galleria`, changefreq: 'weekly', priority: '0.9' },
   { loc: `${BASE}/dove-siamo`, changefreq: 'weekly', priority: '0.9' },
+  { loc: `${BASE}/la-vita-in-casa`, changefreq: 'weekly', priority: '0.85' },
   { loc: `${BASE}/servizi`, changefreq: 'weekly', priority: '0.85' },
   { loc: `${BASE}/chi-siamo`, changefreq: 'weekly', priority: '0.85' },
   { loc: `${BASE}/faq`, changefreq: 'weekly', priority: '0.8' },
@@ -19,6 +21,10 @@ const mainPages = [
   { loc: `${BASE}/blog`, changefreq: 'weekly', priority: '0.8' },
   { loc: `${BASE}/privacy`, changefreq: 'weekly', priority: '0.3' },
   { loc: `${BASE}/cookie`, changefreq: 'weekly', priority: '0.3' },
+  { loc: `${BASE}/note-legali`, changefreq: 'monthly', priority: '0.3' },
+  { loc: `${BASE}/termini-condizioni`, changefreq: 'monthly', priority: '0.3' },
+  { loc: `${BASE}/informativa-sanitaria`, changefreq: 'monthly', priority: '0.3' },
+  { loc: `${BASE}/accessibilita`, changefreq: 'monthly', priority: '0.3' },
 ];
 
 function escapeXml(value) {

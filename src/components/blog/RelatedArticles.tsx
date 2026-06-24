@@ -16,7 +16,7 @@ export default function RelatedArticles({ posts }: { posts: BlogPostMeta[] }) {
               <p className="font-sans text-[10px] font-semibold uppercase tracking-wider text-gold-700/80">
                 {getCategoryName(post.category)}
               </p>
-              <p className="mt-0.5 font-display text-base font-semibold text-forest transition-colors group-hover:text-gold-700">
+              <p className="mt-0.5 font-sans text-base font-semibold text-warm-brown transition-colors group-hover:text-primary">
                 {post.title}
               </p>
             </Link>

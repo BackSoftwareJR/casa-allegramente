@@ -48,13 +48,13 @@ const nextConfig = {
     ];
   },
 
-  // Canonical non-www: www.vgresidence.com → vgresidence.com
+  // Canonical non-www: TODO-sostituire-dominio.it → TODO-sostituire-dominio.it
   async redirects() {
     return [
       {
         source: '/:path*',
-        has: [{ type: 'host', value: 'www.vgresidence.com' }],
-        destination: 'https://vgresidence.com/:path*',
+        has: [{ type: 'host', value: 'TODO-sostituire-dominio.it' }],
+        destination: 'https://TODO-sostituire-dominio.it/:path*',
         permanent: true,
       },
     ];

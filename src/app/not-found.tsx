@@ -10,7 +10,7 @@ export default function NotFound() {
       </p>
       <Link
         href="/"
-        className="mt-8 rounded-full bg-forest px-6 py-3 font-sans text-sm font-semibold text-white hover:bg-forest-700 transition-colors"
+        className="btn-primary mt-8"
       >
         Torna alla home
       </Link>

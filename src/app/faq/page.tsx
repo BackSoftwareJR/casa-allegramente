@@ -2,19 +2,14 @@ import type { Metadata } from 'next';
 import { createPageMetadata } from '@/lib/seo';
 import FAQSection from '@/components/sections/FAQSection';
 import { FAQPageSchema, BreadcrumbListSchema } from '@/components/JsonLd';
-import { faqs } from '@/data/content';
+import { faqs, pageMeta } from '@/data/content';
 import Breadcrumbs from '@/components/blog/Breadcrumbs';
 
 export const metadata: Metadata = createPageMetadata({
-  title: 'FAQ - Domande Frequenti Residenza Anziani Cabiate | Residence V.G',
-  description:
-    'Risposte alle domande più frequenti su ingresso, prezzi, visite e servizi del Residence V.G, residenza per anziani autosufficienti a Cabiate (CO).',
+  title: pageMeta.faq.title,
+  description: pageMeta.faq.description,
   path: '/faq',
-  keywords: [
-    'FAQ residenza anziani Cabiate',
-    'domande casa famiglia Como',
-    'costi residenza anziani Brianza',
-  ],
+  keywords: [...pageMeta.faq.keywords],
 });
 
 export default function FaqPage() {
@@ -35,7 +30,7 @@ export default function FaqPage() {
               { label: 'FAQ' },
             ]}
           />
-          <h1 className="sr-only">Domande Frequenti — Residenza Anziani Cabiate</h1>
+          <h1 className="sr-only">{pageMeta.faq.title}</h1>
         </div>
       </div>
       <FAQSection />

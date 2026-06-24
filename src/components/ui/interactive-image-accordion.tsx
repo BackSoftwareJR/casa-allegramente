@@ -1,7 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useReducedMotion } from 'framer-motion';
+import { brand } from '@/lib/brand-colors';
 
 export interface AccordionImageItem {
   id: number;
@@ -92,13 +94,38 @@ interface ImageAccordionProps {
   items: AccordionImageItem[];
   accent?: string;
   defaultActive?: number;
+  autoPlay?: boolean;
+  autoPlayInterval?: number;
 }
 
-export function ImageAccordion({ items, accent = '#C9A84C', defaultActive = 0 }: ImageAccordionProps) {
+export function ImageAccordion({
+  items,
+  accent = brand.orange.accent,
+  defaultActive = 0,
+  autoPlay = false,
+  autoPlayInterval = 6000,
+}: ImageAccordionProps) {
   const [active, setActive] = useState(defaultActive);
+  const [paused, setPaused] = useState(false);
+  const prefersReduced = useReducedMotion();
+
+  const advance = useCallback(() => {
+    setActive((prev) => (prev + 1) % items.length);
+  }, [items.length]);
+
+  useEffect(() => {
+    if (!autoPlay || prefersReduced || paused) return;
+    const timer = setInterval(advance, autoPlayInterval);
+    return () => clearInterval(timer);
+  }, [autoPlay, autoPlayInterval, advance, prefersReduced, paused]);
 
   return (
-    <div className="flex items-center gap-2.5 overflow-x-auto pb-1" style={{ userSelect: 'none' }}>
+    <div
+      className="flex items-center gap-2.5 overflow-x-auto pb-1"
+      style={{ userSelect: 'none' }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
       {items.map((item, i) => (
         <AccordionItem
           key={item.id}

@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { ContainerScroll } from '@/components/ui/container-scroll-animation';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { fadeUp, staggerContainer } from '@/lib/animations';
+import { manifestoContent } from '@/data/content';
+import { brand } from '@/lib/brand-colors';
 
 const values = [
   {
@@ -12,36 +14,36 @@ const values = [
     name: 'Libertà',
     tagline: 'Vivere come si vuole',
     body: 'Ogni ospite mantiene le proprie abitudini, i propri ritmi, i propri desideri. La struttura si adatta a te — non tu alla struttura.',
-    accent: '#C9A84C',
-    img: '/images/2vg.webp', // finestra aperta sul verde — spazio, apertura
-    tint: 'rgba(201,168,76,0.10)',
+    accent: brand.orange.accent,
+    img: '/images/villa-esterno-pergola-giardino-verde-canavese.avif',
+    tint: `${brand.orange.accent}1A`,
   },
   {
     num: '02',
     name: 'Accoglienza',
     tagline: 'Porte sempre aperte',
     body: 'La famiglia non è un ospite in visita — è parte della nostra comunità. Vieni quando vuoi, resta quanto vuoi.',
-    accent: '#7FA885',
-    img: '/images/foto_orizzontali/IMG_2382.webp', // ospiti e staff insieme in sala
-    tint: 'rgba(127,168,133,0.10)',
+    accent: brand.green.accent,
+    img: '/images/ingresso-accogliente-scala-giardino-rivarolo.avif',
+    tint: `${brand.green.accent}1A`,
   },
   {
     num: '03',
     name: 'Empatia',
     tagline: 'Ascoltare prima di agire',
     body: 'Prima di fare, ascoltiamo. Ogni persona ha una storia che vale la pena conoscere. È da lì che nasce ogni cura.',
-    accent: '#D4A840',
-    img: '/images/foto_orizzontali/IMG_2386.webp', // OSS e ospite in dialogo — ascolto
-    tint: 'rgba(212,168,64,0.10)',
+    accent: brand.yellow.accent,
+    img: '/images/salotto-conviviale-stufa-casa-famiglia-canavese.avif',
+    tint: `${brand.yellow.accent}1A`,
   },
   {
     num: '04',
     name: 'Rispetto',
     tagline: 'Dignità in ogni momento',
     body: 'La dignità non si negozia. Non importa il livello di autonomia — ogni ospite viene trattato con la stessa considerazione.',
-    accent: '#6B8F71',
-    img: '/images/foto_orizzontali/IMG_2384.webp', // cura delicata, presenza attenta
-    tint: 'rgba(107,143,113,0.10)',
+    accent: brand.terracotta.accent,
+    img: '/images/soggiorno-luminoso-stufa-casa-famiglia-anziani.avif',
+    tint: `${brand.terracotta.accent}1A`,
   },
 ];
 
@@ -57,27 +59,27 @@ function SectionHeader({ dark }: { dark?: boolean }) {
       <motion.p
         variants={fadeUp}
         className="font-sans text-sm font-semibold uppercase tracking-[0.18em]"
-        style={{ color: dark ? 'rgba(201,168,76,0.65)' : 'rgba(201,168,76,0.80)' }}
+          style={{ color: dark ? `${brand.orange.accent}B3` : `${brand.orange.accent}D9` }}
       >
         La nostra filosofia
       </motion.p>
       <motion.h2
         variants={fadeUp}
-        className={`mt-4 font-display font-bold text-balance ${dark ? 'text-white' : 'text-forest'}`}
+        className={`mt-4 font-display font-bold text-balance ${dark ? 'text-white' : 'text-warm-brown'}`}
         style={{ fontSize: 'clamp(2.4rem, 5.5vw, 4rem)', letterSpacing: '-0.03em', lineHeight: 1.05 }}
       >
         Quattro valori.<br />Una promessa.
       </motion.h2>
       <motion.p
         variants={fadeUp}
-        className={`mt-4 max-w-sm font-sans text-sm leading-relaxed ${dark ? 'text-white/40' : 'text-ink-light'}`}
+        className={`mt-4 max-w-sm font-sans text-sm leading-relaxed ${dark ? 'text-white/45' : 'text-ink-light'}`}
       >
         Non sono slogan. Sono il modo in cui lavoriamo ogni giorno, con ogni persona.
       </motion.p>
       <motion.div variants={fadeUp} className="mt-6 flex items-center gap-4">
-        <div className="h-px w-12 bg-gold/25" />
-        <span className="text-gold/40 text-sm">✦</span>
-        <div className="h-px w-12 bg-gold/25" />
+        <div className="h-px w-12 bg-primary/25" />
+        <span className="text-primary/45 text-sm">✦</span>
+        <div className="h-px w-12 bg-primary/25" />
       </motion.div>
     </motion.div>
   );
@@ -86,26 +88,26 @@ function SectionHeader({ dark }: { dark?: boolean }) {
 /* ── Values charter card (inside ContainerScroll, desktop only) ── */
 function ValuesCard() {
   return (
-    <div className="h-full w-full overflow-hidden rounded-[24px] bg-[#F5F0E8]">
+    <div className="h-full w-full overflow-hidden rounded-[24px] bg-linen-100">
       {/* Card header bar */}
-      <div className="flex items-center justify-between border-b border-[#2D3A2E]/10 px-8 py-4">
+      <div className="flex items-center justify-between border-b border-warm-brown/10 px-8 py-4">
         <div className="flex items-center gap-2.5">
-          <div className="h-2 w-2 rounded-full bg-gold" />
-          <span className="font-sans text-[10px] font-semibold uppercase tracking-[0.22em] text-[#2D3A2E]/45">Residenza V.G · Cabiate</span>
+          <div className="h-2 w-2 rounded-full bg-primary" />
+          <span className="font-sans text-[10px] font-semibold uppercase tracking-[0.22em] text-warm-brown/45">AllegraMente · Rivarolo Canavese</span>
         </div>
-        <span className="font-display text-xs italic text-[#2D3A2E]/25">&ldquo;Libertà, accoglienza, empatia e rispetto&rdquo;</span>
+        <span className="font-sans text-xs italic text-ink-muted/50">&ldquo;{manifestoContent.quote.slice(0, 50)}…&rdquo;</span>
       </div>
 
       {/* 2×2 grid */}
-      <div className="grid h-[calc(100%-56px)] grid-cols-2 divide-x divide-[#2D3A2E]/10">
+      <div className="grid h-[calc(100%-56px)] grid-cols-2 divide-x divide-warm-brown/10">
         {/* Left column */}
-        <div className="flex flex-col divide-y divide-[#2D3A2E]/10">
+        <div className="flex flex-col divide-y divide-warm-brown/10">
           {[values[0], values[2]].map((v) => (
             <ValueCell key={v.num} v={v} />
           ))}
         </div>
         {/* Right column */}
-        <div className="flex flex-col divide-y divide-[#2D3A2E]/10">
+        <div className="flex flex-col divide-y divide-warm-brown/10">
           {[values[1], values[3]].map((v) => (
             <ValueCell key={v.num} v={v} />
           ))}
@@ -125,15 +127,15 @@ function ValueCell({ v }: { v: typeof values[0] }) {
         <div className="mt-1 h-2 w-2 shrink-0 rounded-full" style={{ background: v.accent }} />
       </div>
       <div className="mt-3">
-        <h3 className="font-display font-bold text-[#2D3A2E]" style={{ fontSize: 'clamp(1.6rem, 2.5vw, 2.2rem)', letterSpacing: '-0.03em', lineHeight: 1 }}>
+        <h3 className="font-display font-bold text-warm-brown" style={{ fontSize: 'clamp(1.6rem, 2.5vw, 2.2rem)', letterSpacing: '-0.03em', lineHeight: 1 }}>
           {v.name}
         </h3>
-        <p className="mt-1 font-display italic" style={{ fontSize: '0.9rem', color: v.accent }}>
+        <p className="mt-1 font-sans font-semibold" style={{ fontSize: '0.9rem', color: v.accent }}>
           {v.tagline}
         </p>
       </div>
-      <div className="my-3 h-px w-10 rounded-full" style={{ background: v.accent, opacity: 0.35 }} />
-      <p className="font-sans text-sm leading-[1.75] text-[#2D3A2E]/55">{v.body}</p>
+      <div className="my-3 h-0.5 w-10 rounded-full" style={{ background: v.accent, opacity: 0.50 }} />
+      <p className="font-sans text-sm leading-[1.75] text-ink-muted">{v.body}</p>
     </div>
   );
 }
@@ -279,7 +281,7 @@ function ValuesMobile() {
 
             {/* Tagline */}
             <p
-              className="mt-4 font-display italic text-white"
+              className="mt-4 font-sans font-semibold text-white"
               style={{ fontSize: '1.35rem', opacity: 0.9, letterSpacing: '-0.01em', lineHeight: 1.3, textShadow: '0 2px 12px rgba(0,0,0,0.8)' }}
             >
               {v.tagline}
@@ -344,15 +346,15 @@ function ValuesMobile() {
 /* ── Desktop: ContainerScroll 3D panel ── */
 function ValuesDesktop() {
   return (
-    <section aria-label="La nostra filosofia" className="relative hidden overflow-hidden bg-forest md:block">
-      <div className="pointer-events-none absolute inset-0 opacity-15" style={{ background: 'radial-gradient(ellipse 55% 40% at 50% 0%, rgba(201,168,76,0.5) 0%, transparent 70%)' }} aria-hidden="true" />
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
-      <ContainerScroll
-        titleComponent={<SectionHeader dark />}
-      >
+    <section aria-label="I nostri valori" className="relative hidden overflow-hidden bg-transparent md:block">
+      <div
+        className="pointer-events-none absolute inset-0 opacity-60"
+        style={{ background: `radial-gradient(ellipse 55% 40% at 50% 0%, ${brand.orange.accent}14 0%, transparent 70%)` }}
+        aria-hidden="true"
+      />
+      <ContainerScroll titleComponent={<SectionHeader />}>
         <ValuesCard />
       </ContainerScroll>
-      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
     </section>
   );
 }

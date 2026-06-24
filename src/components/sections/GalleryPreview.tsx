@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { galleryImages } from '@/data/content';
+import { galleryImages, visitCta } from '@/data/content';
 import { fadeUp, staggerContainer, viewportOptions } from '@/lib/animations';
 import { ArrowUpRight } from 'lucide-react';
 
@@ -57,7 +57,7 @@ function GallerySlideshow({
         </motion.div>
       </AnimatePresence>
 
-      <div className="absolute inset-0 bg-gradient-to-t from-forest/45 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+          <div className="absolute inset-0 bg-gradient-to-t from-warm-brown/45 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
       {/* Indicatori */}
       {slides.length > 1 && (
@@ -91,12 +91,12 @@ export default function GalleryPreview() {
           className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between"
         >
           <div>
-            <motion.p variants={fadeUp} className="font-sans text-sm font-semibold uppercase tracking-[0.15em] text-gold-700">
+            <motion.p variants={fadeUp} className="font-sans text-sm font-semibold uppercase tracking-[0.15em] text-primary-700">
               La struttura in foto
             </motion.p>
             <motion.h2
               variants={fadeUp}
-              className="mt-3 font-display font-semibold text-forest"
+              className="mt-3 font-display font-bold text-warm-brown"
               style={{ fontSize: 'clamp(2rem, 4.5vw, 3rem)', letterSpacing: '-0.02em', lineHeight: 1.1 }}
             >
               Vieni a vederla<br />con i tuoi occhi
@@ -105,7 +105,7 @@ export default function GalleryPreview() {
           <motion.div variants={fadeUp}>
             <Link
               href="/galleria"
-              className="group inline-flex items-center gap-2 rounded-full border border-forest/25 bg-white px-5 py-2.5 font-sans text-sm font-semibold text-forest shadow-warm-sm transition-all hover:bg-forest hover:text-white hover:shadow-warm-md"
+              className="group inline-flex items-center gap-2 rounded-full border border-primary/25 bg-white px-5 py-2.5 font-sans text-sm font-semibold text-primary shadow-warm-sm transition-all hover:bg-primary hover:text-white hover:shadow-warm-md"
             >
               Tutta la galleria
               <ArrowUpRight size={14} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -166,8 +166,8 @@ export default function GalleryPreview() {
           className="mt-7 flex flex-col items-center gap-1.5 text-center"
         >
           <p className="font-sans text-sm text-ink-muted">Vuoi vedere la struttura di persona?</p>
-          <Link href="#contatti" className="font-sans text-sm font-semibold text-forest underline underline-offset-4 transition-colors hover:text-gold-700">
-            Prenota una visita gratuita — è senza obbligo →
+          <Link href="#contatti" className="font-sans text-sm font-semibold text-warm-brown underline underline-offset-4 transition-colors hover:text-primary">
+            {visitCta.galleryLink} →
           </Link>
         </motion.div>
       </div>

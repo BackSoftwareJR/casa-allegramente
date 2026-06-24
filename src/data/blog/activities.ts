@@ -1,4 +1,4 @@
-// Attività del Residence V.G per il carosello nella sezione "Le Nostre Attività"
+// Attività del bsbsbsbsbs per il carosello nella sezione "Le Nostre Attività"
 
 export interface ActivityCard {
   id: string;

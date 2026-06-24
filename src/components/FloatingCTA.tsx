@@ -37,14 +37,14 @@ export default function FloatingCTA() {
               >
                 <a
                   href={`tel:${siteConfig.contact.phoneRaw}`}
-                  className="flex items-center gap-3 rounded-full bg-forest px-4 py-2.5 font-sans text-sm font-semibold text-white shadow-warm-lg transition-all hover:bg-forest-700"
+                  className="flex items-center gap-3 rounded-full bg-primary px-4 py-2.5 font-sans text-sm font-semibold text-white shadow-warm-lg transition-all hover:bg-primary-dark"
                   onClick={() => setOpen(false)}
                 >
                   <Phone size={15} />
                   {siteConfig.contact.phone}
                 </a>
                 <a
-                  href={`https://wa.me/${siteConfig.contact.whatsapp}?text=Buongiorno%2C%20vorrei%20informazioni%20su%20Residence%20V.G`}
+                  href={`https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(`Buongiorno, vorrei informazioni su ${siteConfig.name}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 rounded-full bg-[#25D366] px-4 py-2.5 font-sans text-sm font-semibold text-white shadow-warm-lg transition-all hover:bg-[#1ebe5d]"
@@ -57,22 +57,23 @@ export default function FloatingCTA() {
             )}
           </AnimatePresence>
 
-          {/* Main toggle button */}
+          {/* Main toggle button — arancione primario */}
           <motion.button
             onClick={() => setOpen((v) => !v)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             aria-label={open ? 'Chiudi menu contatti' : 'Apri menu contatti'}
-            className="flex h-14 w-14 items-center justify-center rounded-full bg-gold shadow-[0_4px_20px_rgba(201,168,76,0.5)] transition-all hover:bg-gold-300"
+            className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white transition-all hover:bg-primary-dark"
+            style={{ boxShadow: '0 4px 20px rgba(232,118,10,0.5)' }}
           >
             <AnimatePresence mode="wait">
               {open ? (
                 <motion.span key="x" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                  <X size={22} className="text-forest" />
+                  <X size={22} />
                 </motion.span>
               ) : (
                 <motion.span key="phone" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                  <Phone size={22} className="text-forest" />
+                  <Phone size={22} />
                 </motion.span>
               )}
             </AnimatePresence>

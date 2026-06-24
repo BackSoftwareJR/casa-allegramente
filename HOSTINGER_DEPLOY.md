@@ -39,7 +39,7 @@ Poi redeploy su Hostinger (vedi sotto).
 Git push **non basta** se il redeploy automatico non è attivo o la build precedente è fallita.
 
 1. Accedi a **hPanel** → **Websites**
-2. Seleziona **vgresidence.com**
+2. Seleziona **TODO-sostituire-dominio.it**
 3. Apri la dashboard **Node.js Web App**
 4. Vai a **Deployments**
 5. Clicca **Settings and redeploy**
@@ -52,7 +52,7 @@ Git push **non basta** se il redeploy automatico non è attivo o la build preced
 9. Verifica:
 
 ```bash
-curl -sI https://vgresidence.com/blog/come-scegliere-residenza-anziani-autosufficienti | head -1
+curl -sI https://TODO-sostituire-dominio.it/blog/come-scegliere-residenza-anziani-autosufficienti | head -1
 # Deve essere: HTTP/2 200
 ```
 

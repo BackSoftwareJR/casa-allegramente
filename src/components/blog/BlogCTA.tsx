@@ -1,6 +1,9 @@
+'use client';
+
 import Link from 'next/link';
 import { Phone, MessageCircle } from 'lucide-react';
 import { siteConfig } from '@/data/content';
+import { FlowButton } from '@/components/ui/flow-button';
 
 interface BlogCTAProps {
   title?: string;
@@ -8,37 +11,32 @@ interface BlogCTAProps {
   variant?: 'default' | 'whatsapp';
 }
 
-const WHATSAPP_BLOG =
-  'https://wa.me/393519581235?text=Buongiorno%2C%20ho%20letto%20il%20vostro%20blog%20e%20vorrei%20informazioni%20su%20Residence%20V.G';
+const WHATSAPP_BLOG = `https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(`Buongiorno, ho letto il vostro blog e vorrei informazioni su ${siteConfig.name}`)}`;
 
 export default function BlogCTA({
   title = 'Hai domande sulla nostra struttura?',
-  description = 'Siamo a Cabiate (CO), residenza per anziani autosufficienti con massimo 10 ospiti. Prenota una visita gratuita e senza impegno.',
+  description = 'Siamo a TODO_CITTA (TODO), residenza per anziani autosufficienti con massimo 10 ospiti. Prenota una visita gratuita e senza impegno.',
   variant = 'default',
 }: BlogCTAProps) {
   return (
-    <aside className="my-10 rounded-2xl bg-forest p-6 text-white md:p-8 not-prose">
-      <h3 className="font-display text-xl font-semibold">{title}</h3>
-      <p className="mt-2 font-sans text-sm leading-relaxed text-white/70">{description}</p>
+    <aside className="my-10 rounded-2xl border border-linen-200 bg-white p-6 text-ink shadow-warm-sm md:p-8 not-prose">
+      <h3 className="font-display text-xl font-semibold text-warm-brown">{title}</h3>
+      <p className="mt-2 font-sans text-sm leading-relaxed text-ink-muted">{description}</p>
       <div className="mt-5 flex flex-wrap gap-3">
-        <a href={`tel:${siteConfig.contact.phoneRaw}`} className="btn-primary">
-          <Phone size={14} />
-          {siteConfig.contact.phone}
-        </a>
+        <div>
+          <FlowButton as="a" href={`tel:${siteConfig.contact.phoneRaw}`} icon={<Phone size={14} />} iconPosition="left">
+            {siteConfig.contact.phone}
+          </FlowButton>
+          <p className="mt-1.5 font-sans text-xs text-ink-muted">{siteConfig.contact.phoneContactNote}</p>
+        </div>
         {variant === 'whatsapp' ? (
-          <a
-            href={WHATSAPP_BLOG}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-ghost-white"
-          >
-            <MessageCircle size={14} />
+          <FlowButton as="a" href={WHATSAPP_BLOG} target="_blank" rel="noopener noreferrer" icon={<MessageCircle size={14} />} iconPosition="left">
             Scrivici su WhatsApp
-          </a>
+          </FlowButton>
         ) : (
-          <Link href="/#contatti" className="btn-ghost-white">
+          <FlowButton as={Link} href="/#contatti">
             Prenota una visita
-          </Link>
+          </FlowButton>
         )}
       </div>
     </aside>

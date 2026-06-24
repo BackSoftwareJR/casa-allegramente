@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useMemo, useState } from 'react';
+import { siteConfig } from '@/data/content';
 import { cn } from '@/lib/utils';
 
 export interface PortfolioGalleryImage {
@@ -183,15 +184,15 @@ export function PortfolioGallery({
         transition={{ duration: 0.5 }}
         className="relative z-30 px-6 pb-4 pt-28 text-center md:pb-2 md:pt-32"
       >
-        <p className="mb-3 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-gold/70">
-          Residence V.G · Cabiate
+        <p className="mb-3 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-primary/70">
+          {siteConfig.name} · {siteConfig.contact.address.city}
         </p>
-        <h2 className="text-balance font-display text-4xl font-semibold text-white md:text-6xl">
+        <h2 className="text-balance font-display text-4xl font-semibold text-warm-brown md:text-6xl">
           {title}
         </h2>
         <Link
           href={archiveButton.href}
-          className="group mt-8 inline-flex items-center gap-3 rounded-full bg-gold px-6 py-3 font-sans text-sm font-semibold text-forest transition-colors hover:bg-gold-300"
+          className="group mt-8 inline-flex items-center gap-3 rounded-full bg-primary px-6 py-3 font-sans text-sm font-semibold text-white shadow-warm-sm transition-colors hover:bg-primary-dark hover:shadow-warm-md"
         >
           <span>{archiveButton.text}</span>
           <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />

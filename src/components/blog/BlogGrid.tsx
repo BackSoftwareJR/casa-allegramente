@@ -27,8 +27,8 @@ export default function BlogGrid({ posts }: BlogGridProps) {
               onClick={() => setActiveCategory(cat.id)}
               className={`rounded-full px-4 py-2 font-sans text-sm font-medium transition-all duration-200 ${
                 isActive
-                  ? 'bg-forest text-white shadow-warm-sm'
-                  : 'border border-linen-300 bg-white text-ink-light hover:border-gold/40 hover:text-forest'
+                  ? 'bg-primary text-white shadow-warm-sm'
+                  : 'border border-linen-300 bg-white text-ink-light hover:border-primary/40 hover:text-warm-brown'
               }`}
             >
               {cat.name}

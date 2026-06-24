@@ -3,12 +3,10 @@
 import Image from 'next/image';
 import {
   motion,
-  useScroll,
-  useTransform,
   useReducedMotion,
   AnimatePresence,
 } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Phone,
   MessageCircle,
@@ -18,9 +16,9 @@ import {
   ArrowRight,
   CalendarCheck,
   DoorOpen,
-  HeartHandshake,
 } from 'lucide-react';
-import { siteConfig } from '@/data/content';
+import { siteConfig, pageHeroImages, visitCta } from '@/data/content';
+import SectionPastelBg from '@/components/ui/SectionPastelBg';
 import { staggerContainer, fadeUp, viewportOptions } from '@/lib/animations';
 
 const reasons = [
@@ -36,7 +34,7 @@ const steps = [
     num: '01',
     icon: Phone,
     title: 'Chiamaci o scrivici',
-    body: 'Un messaggio WhatsApp o una telefonata bastano. Nessun modulo da compilare.',
+    body: `Un messaggio WhatsApp o una telefonata bastano. ${siteConfig.contact.phoneContactNote}.`,
   },
   {
     num: '02',
@@ -64,7 +62,7 @@ const contactLinks = [
     icon: MessageCircle,
     label: 'WhatsApp',
     value: siteConfig.contact.whatsappDisplay,
-    href: `https://wa.me/${siteConfig.contact.whatsapp}?text=Buongiorno%2C%20vorrei%20prenotare%20una%20visita%20a%20Residence%20V.G`,
+    href: `https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(`Buongiorno, vorrei prenotare una visita a ${siteConfig.name}`)}`,
     color: 'text-[#25D366]',
   },
   {
@@ -83,96 +81,86 @@ const contactLinks = [
   },
 ];
 
-function ActionCard({
-  prefersReduced,
-}: {
-  prefersReduced: boolean | null;
-}) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-
-  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (prefersReduced || !cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    setTilt({ x: y * -6, y: x * 8 });
-  };
-
-  const handleLeave = () => setTilt({ x: 0, y: 0 });
+function ActionCard() {
+  const whatsappHref = `https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(`Buongiorno, vorrei prenotare una visita a ${siteConfig.name}`)}`;
 
   return (
     <motion.div
-      ref={cardRef}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
-      style={{
-        rotateX: tilt.x,
-        rotateY: tilt.y,
-        transformPerspective: 1200,
-      }}
-      className="perspective-1000 preserve-3d relative mx-auto w-full max-w-xl"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={viewportOptions}
+      transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+      className="relative mx-auto w-full max-w-lg"
     >
-      {/* Pulse ring behind primary CTA */}
-      {!prefersReduced && (
-        <motion.div
-          aria-hidden="true"
-          className="pointer-events-none absolute left-1/2 top-[42%] h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/20 blur-2xl"
-          animate={{ scale: [1, 1.25, 1], opacity: [0.35, 0.6, 0.35] }}
-          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-        />
-      )}
+      <div className="relative overflow-hidden rounded-2xl border border-linen-200/90 bg-white/95 p-6 shadow-warm-sm backdrop-blur-sm md:p-7">
+        <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-primary/5 blur-2xl" />
 
-      <div className="noise relative overflow-hidden rounded-3xl border border-white/15 bg-white/[0.07] p-8 shadow-[0_32px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl md:p-10">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
-        <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-gold/10 blur-3xl" />
-
-        <div className="relative text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={viewportOptions}
-            className="mx-auto mb-5 inline-flex items-center gap-2 rounded-full border border-gold/35 bg-gold/10 px-4 py-1.5"
-          >
-            <HeartHandshake size={14} className="text-gold" />
-            <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-gold/90">
-              Gratuita · Senza impegno
-            </span>
-          </motion.div>
-
-          <h3
-            className="font-display font-semibold text-white text-balance"
-            style={{ fontSize: 'clamp(1.6rem, 4vw, 2.2rem)', letterSpacing: '-0.02em', lineHeight: 1.15 }}
-          >
-            Prenota la tua visita{' '}
-            <span className="text-gradient-gold">oggi</span>
-          </h3>
-          <p className="mx-auto mt-3 max-w-sm font-sans text-sm leading-relaxed text-white/55">
-            Una chiamata e vieni a conoscerci di persona. Siamo a Cabiate, pronti ad accoglierti.
+        <div className="relative">
+          <p className="font-sans text-[11px] font-medium uppercase tracking-[0.16em] text-primary/80">
+            Gratuita · senza impegno
           </p>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+          <h3
+            className="mt-3 font-display font-semibold text-warm-brown text-balance"
+            style={{ fontSize: 'clamp(1.35rem, 3.2vw, 1.75rem)', letterSpacing: '-0.02em', lineHeight: 1.2 }}
+          >
+            {visitCta.label}{' '}
+            <span className="text-gradient-gold">oggi</span>
+          </h3>
+          <p className="mt-2 max-w-md font-sans text-sm leading-relaxed text-ink-muted">
+            Una chiamata o un messaggio bastano. Siamo a Rivarolo Canavese, pronti ad accoglierti.
+          </p>
+
+          <div className="mt-6 grid gap-2.5 sm:grid-cols-2">
             <a
               href={`tel:${siteConfig.contact.phoneRaw}`}
-              className="btn-primary group relative w-full justify-center px-8 py-4 text-base sm:w-auto md:whitespace-nowrap"
+              className="group flex items-center gap-3 rounded-xl border border-linen-200 bg-linen-50/80 px-3.5 py-3 transition-all hover:border-primary/30 hover:bg-white hover:shadow-warm-sm"
             >
-              <Phone size={17} strokeWidth={2.5} className="transition-transform group-hover:rotate-12" />
-              Chiama — {siteConfig.contact.phone}
-              <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+                <Phone size={16} strokeWidth={2.25} />
+              </span>
+              <span className="min-w-0 flex-1 text-left">
+                <span className="block font-sans text-sm font-semibold text-warm-brown">
+                  {siteConfig.contact.phoneCtaLabel}
+                </span>
+                <span className="mt-0.5 block truncate font-sans text-xs text-ink-muted">
+                  {siteConfig.contact.phone}
+                </span>
+              </span>
+              <ArrowRight
+                size={14}
+                className="shrink-0 text-ink-muted/40 transition-transform group-hover:translate-x-0.5 group-hover:text-primary"
+                aria-hidden="true"
+              />
             </a>
+
             <a
-              href={`https://wa.me/${siteConfig.contact.whatsapp}?text=Buongiorno%2C%20vorrei%20prenotare%20una%20visita%20a%20Residence%20V.G`}
+              href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-ghost-white w-full justify-center px-8 py-4 text-base sm:w-auto"
+              className="group flex items-center gap-3 rounded-xl border border-linen-200 bg-linen-50/80 px-3.5 py-3 transition-all hover:border-[#25D366]/35 hover:bg-white hover:shadow-warm-sm"
             >
-              <MessageCircle size={17} />
-              Scrivi su WhatsApp
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#25D366]/10 text-[#25D366] transition-colors group-hover:bg-[#25D366] group-hover:text-white">
+                <MessageCircle size={16} strokeWidth={2.25} />
+              </span>
+              <span className="min-w-0 flex-1 text-left">
+                <span className="block font-sans text-sm font-semibold text-warm-brown">
+                  WhatsApp
+                </span>
+                <span className="mt-0.5 block font-sans text-xs text-ink-muted">
+                  Scrivici quando vuoi
+                </span>
+              </span>
+              <ArrowRight
+                size={14}
+                className="shrink-0 text-ink-muted/40 transition-transform group-hover:translate-x-0.5 group-hover:text-[#25D366]"
+                aria-hidden="true"
+              />
             </a>
           </div>
 
-          <p className="mt-5 flex items-center justify-center gap-2 font-sans text-xs text-white/40">
-            <Clock size={12} className="text-gold/70" />
+          <p className="mt-4 flex items-start gap-2 font-sans text-xs leading-relaxed text-ink-muted">
+            <Clock size={12} className="mt-0.5 shrink-0 text-primary/60" />
             {siteConfig.contact.hours}
           </p>
         </div>
@@ -182,22 +170,12 @@ function ActionCard({
 }
 
 export default function VisitSection() {
-  const ref = useRef<HTMLDivElement>(null);
   const prefersReduced = useReducedMotion();
   const [bgIndex, setBgIndex] = useState(0);
 
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'],
-  });
-
-  const bgY = useTransform(scrollYProgress, [0, 1], ['-8%', '8%']);
-  const contentY = useTransform(scrollYProgress, [0, 1], ['4%', '-4%']);
-  const glowOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.2, 0.45, 0.2]);
-
   const backgrounds = [
-    { src: '/images/IMG_4203.webp', alt: 'Esterno Residence V.G Cabiate' },
-    { src: '/images/foto_orizzontali/IMG_2382.webp', alt: 'Accoglienza in struttura' },
+    { src: pageHeroImages.doveSiamo, alt: `Ingresso ${siteConfig.name} — Rivarolo Canavese` },
+    { src: pageHeroImages.chiSiamo, alt: 'Giardino e facciata villa AllegraMente' },
   ];
 
   useEffect(() => {
@@ -210,70 +188,37 @@ export default function VisitSection() {
 
   return (
     <section
-      ref={ref}
       id="contatti"
-      aria-label="Prenota una visita gratuita"
-      className="relative min-h-[92dvh] overflow-hidden bg-forest"
+      aria-label={visitCta.label}
+      className="relative bg-transparent py-20 md:py-28"
     >
-      {/* ── Cinematic background ── */}
-      <motion.div style={{ y: bgY }} className="absolute inset-0 z-0">
-        <AnimatePresence initial={false}>
-          <motion.div
-            key={bgIndex}
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.4, ease: 'easeInOut' }}
-            className="absolute inset-0"
-          >
-            <Image
-              src={backgrounds[bgIndex].src}
-              alt={backgrounds[bgIndex].alt}
-              fill
-              sizes="100vw"
-              className={`object-cover ${prefersReduced ? '' : 'ken-burns'}`}
-            />
-          </motion.div>
-        </AnimatePresence>
+      <SectionPastelBg hue="brown" className="py-0">
+      <div className="container-site">
+        <div className="section-card overflow-hidden">
+          {/* Subtle photo strip */}
+          <div className="relative h-44 overflow-hidden md:h-52">
+            <AnimatePresence initial={false}>
+              <motion.div
+                key={bgIndex}
+                initial={{ opacity: 0, scale: 1.03 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1.2, ease: 'easeInOut' }}
+                className="absolute inset-0"
+              >
+                <Image
+                  src={backgrounds[bgIndex].src}
+                  alt={backgrounds[bgIndex].alt}
+                  fill
+                  sizes="100vw"
+                  className={`object-cover ${prefersReduced ? '' : 'ken-burns'}`}
+                />
+              </motion.div>
+            </AnimatePresence>
+            <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent" />
+          </div>
 
-        <div className="absolute inset-0 bg-gradient-to-b from-forest/90 via-forest/75 to-forest/95" />
-        <div className="absolute inset-0 bg-gradient-to-r from-forest/80 via-transparent to-forest/60" />
-        <motion.div
-          style={{ opacity: glowOpacity }}
-          className="absolute inset-0"
-          aria-hidden="true"
-        >
-          <div
-            className="h-full w-full"
-            style={{
-              background:
-                'radial-gradient(ellipse 80% 55% at 50% 40%, rgba(201,168,76,0.22) 0%, transparent 65%)',
-            }}
-          />
-        </motion.div>
-      </motion.div>
-
-      {/* Ambient orbs */}
-      {!prefersReduced && (
-        <>
-          <motion.div
-            aria-hidden="true"
-            className="pointer-events-none absolute -left-24 top-1/4 h-64 w-64 rounded-full bg-gold/10 blur-3xl"
-            animate={{ x: [0, 30, 0], y: [0, -20, 0] }}
-            transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-          />
-          <motion.div
-            aria-hidden="true"
-            className="pointer-events-none absolute -right-20 bottom-1/4 h-72 w-72 rounded-full bg-sage/15 blur-3xl"
-            animate={{ x: [0, -25, 0], y: [0, 15, 0] }}
-            transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-          />
-        </>
-      )}
-
-      <div className="absolute inset-x-0 top-0 z-10 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
-
-      <motion.div style={{ y: contentY }} className="container-site relative z-10 py-20 md:py-28">
+          <div className="px-6 py-12 md:px-12 md:py-16">
         {/* ── Header ── */}
         <motion.div
           variants={staggerContainer}
@@ -284,29 +229,29 @@ export default function VisitSection() {
         >
           <motion.p
             variants={fadeUp}
-            className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-gold/85"
+            className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-primary"
           >
-            Prenota una visita gratuita
+            {visitCta.label}
           </motion.p>
           <motion.h2
             variants={fadeUp}
-            className="mt-4 font-display font-semibold text-white text-balance"
+            className="mt-4 font-display font-semibold text-warm-brown text-balance"
             style={{
               fontSize: 'clamp(2.4rem, 6vw, 3.8rem)',
               letterSpacing: '-0.025em',
               lineHeight: 1.08,
             }}
           >
-            Vieni a vederci.{' '}
+            Vieni a trovarci.{' '}
             <span className="text-gradient-gold">È il passo che conta.</span>
           </motion.h2>
           <motion.div variants={fadeUp} className="mx-auto mt-6 gold-divider" />
           <motion.p
             variants={fadeUp}
-            className="mx-auto mt-6 max-w-xl font-sans text-base leading-relaxed text-white/60 md:text-lg"
+            className="mx-auto mt-6 max-w-xl font-sans text-base leading-relaxed text-ink-light md:text-lg"
           >
             Nessun modulo, nessuna attesa. Chiamaci o scrivici — ti accogliamo in struttura
-            e ti mostriamo come viviamo ogni giorno a Cabiate.
+            e ti mostriamo come viviamo ogni giorno a Rivarolo Canavese.
           </motion.p>
         </motion.div>
 
@@ -318,7 +263,7 @@ export default function VisitSection() {
           transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           className="mt-12 md:mt-16"
         >
-          <ActionCard prefersReduced={prefersReduced} />
+          <ActionCard />
         </motion.div>
 
         {/* ── 3-step path ── */}
@@ -333,18 +278,18 @@ export default function VisitSection() {
             <motion.div
               key={step.num}
               variants={fadeUp}
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] p-6 backdrop-blur-sm transition-colors hover:border-gold/25 hover:bg-white/[0.08]"
+              className="group relative overflow-hidden rounded-2xl border border-linen-200 bg-linen-50 p-6 transition-colors hover:border-primary/25 hover:bg-white hover:shadow-warm-sm"
             >
               <div className="flex items-start justify-between">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/15 ring-1 ring-gold/25">
-                  <step.icon size={18} className="text-gold" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 ring-1 ring-primary/20">
+                  <step.icon size={18} className="text-primary" />
                 </div>
-                <span className="font-display text-3xl font-bold leading-none text-white/10 transition-colors group-hover:text-gold/20">
+                <span className="font-sans text-3xl font-bold leading-none text-linen-300 transition-colors group-hover:text-primary/20">
                   {step.num}
                 </span>
               </div>
-              <h3 className="mt-4 font-display text-xl font-semibold text-white">{step.title}</h3>
-              <p className="mt-2 font-sans text-sm leading-relaxed text-white/55">{step.body}</p>
+              <h3 className="mt-4 font-display text-xl font-semibold text-warm-brown">{step.title}</h3>
+              <p className="mt-2 font-sans text-sm leading-relaxed text-ink-muted">{step.body}</p>
               {i < steps.length - 1 && (
                 <ArrowRight
                   size={16}
@@ -364,7 +309,7 @@ export default function VisitSection() {
             whileInView="visible"
             viewport={viewportOptions}
           >
-            <motion.p variants={fadeUp} className="font-sans text-xs font-semibold uppercase tracking-[0.15em] text-gold/70">
+            <motion.p variants={fadeUp} className="font-sans text-xs font-semibold uppercase tracking-[0.15em] text-primary/80">
               Cosa aspettarti
             </motion.p>
             <motion.ul variants={staggerContainer} className="mt-5 space-y-3">
@@ -372,10 +317,10 @@ export default function VisitSection() {
                 <motion.li
                   key={r}
                   variants={fadeUp}
-                  className="flex items-start gap-3 rounded-xl border border-transparent px-3 py-2 transition-colors hover:border-white/10 hover:bg-white/[0.04]"
+                  className="flex items-start gap-3 rounded-xl border border-transparent px-3 py-2 transition-colors hover:border-linen-200 hover:bg-linen-50"
                 >
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />
-                  <span className="font-sans text-sm leading-relaxed text-white/70">{r}</span>
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                  <span className="font-sans text-sm leading-relaxed text-ink-light">{r}</span>
                 </motion.li>
               ))}
             </motion.ul>
@@ -395,28 +340,34 @@ export default function VisitSection() {
                 href={href}
                 target={href.startsWith('http') ? '_blank' : undefined}
                 rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="group flex flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.06] p-4 transition-all hover:-translate-y-0.5 hover:border-gold/30 hover:bg-white/[0.10] hover:shadow-[0_12px_40px_rgba(0,0,0,0.25)]"
+                className="group flex flex-col justify-between rounded-2xl border border-linen-200 bg-white p-4 transition-all hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-warm-sm"
               >
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 transition-colors group-hover:bg-gold/15">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-linen-100 transition-colors group-hover:bg-primary/10">
                   <Icon size={16} className={color} />
                 </div>
                 <div className="mt-4 min-w-0">
-                  <p className="font-sans text-[10px] uppercase tracking-wider text-white/35">{label}</p>
+                  <p className="font-sans text-[10px] font-semibold uppercase tracking-wider text-ink-muted">{label}</p>
                   <p
-                    className={`mt-1 font-sans text-xs font-semibold leading-tight text-white/90${
+                    className={`mt-1 font-sans text-xs font-semibold leading-tight text-ink${
                       label === 'Telefono' ? ' md:whitespace-nowrap' : ''
                     }`}
                   >
                     {value}
                   </p>
+                  {label === 'Telefono' && (
+                    <p className="mt-1 font-sans text-[10px] leading-tight text-ink-muted">
+                      {siteConfig.contact.phoneContactNote}
+                    </p>
+                  )}
                 </div>
               </motion.a>
             ))}
           </motion.div>
         </div>
-      </motion.div>
-
-      <div className="absolute inset-x-0 bottom-0 z-10 h-px bg-gradient-to-r from-transparent via-gold/25 to-transparent" />
+          </div>
+        </div>
+      </div>
+      </SectionPastelBg>
     </section>
   );
 }

@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { siteConfig } from '@/data/content';
 
-/** Canonical base URL (non-www) per SEO audit */
-export const CANONICAL_BASE = 'https://vgresidence.com';
+/** Canonical base URL (non-www) per SEO audit — da siteConfig */
+export const CANONICAL_BASE = siteConfig.url.replace(/\/$/, '');
 
 export interface PageSeoOptions {
   title: string;
@@ -63,13 +63,14 @@ export function createArticleMetadata({
   path,
   keywords = [],
   ogImage,
+  noIndex = false,
   publishedTime,
   modifiedTime,
 }: PageSeoOptions & {
   publishedTime: string;
   modifiedTime?: string;
 }): Metadata {
-  const base = createPageMetadata({ title, description, path, keywords, ogImage });
+  const base = createPageMetadata({ title, description, path, keywords, ogImage, noIndex });
   const url = absoluteUrl(path);
 
   return {

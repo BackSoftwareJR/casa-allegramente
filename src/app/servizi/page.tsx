@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { createPageMetadata } from '@/lib/seo';
 import ServicesSection from '@/components/sections/ServicesSection';
+import ServiziHero from '@/components/sections/ServiziHero';
 import { BreadcrumbListSchema } from '@/components/JsonLd';
-import Breadcrumbs from '@/components/blog/Breadcrumbs';
-import { includedItems, extraServices, pageMeta, serviziContent, accessRequirements } from '@/data/content';
+import { includedItems, extraServices, pageMeta, accessRequirements } from '@/data/content';
 import { brandAccentCycle, brandPastelCycle } from '@/lib/brand-colors';
 
 export const metadata: Metadata = createPageMetadata({
@@ -17,13 +17,9 @@ export default function ServiziPage() {
   return (
     <>
       <BreadcrumbListSchema items={[{ name: 'Home', path: '/' }, { name: 'Servizi', path: '/servizi' }]} />
-      <div className="bg-transparent pt-24">
-        <div className="container-site pb-4">
-          <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Servizi' }]} />
-          <h1 className="sr-only">{pageMeta.servizi.title}</h1>
-          <p className="mt-4 max-w-2xl font-sans text-base text-ink-light">{serviziContent.intro.text}</p>
-        </div>
-      </div>
+      <h1 className="sr-only">{pageMeta.servizi.title}</h1>
+
+      <ServiziHero />
 
       <ServicesSection />
 

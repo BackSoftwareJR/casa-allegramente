@@ -4,6 +4,11 @@
 
 @layer base {
   :root {
+    --background: 40 33% 97%;
+    --foreground: 24 50% 11%;
+    --card: 0 0% 100%;
+    --border: 30 20% 85%;
+    --muted-foreground: 24 20% 45%;
     --font-display: 'Nunito', system-ui, sans-serif;
     --font-sans: 'Source Sans 3', system-ui, sans-serif;
     --color-primary: #E8956A;

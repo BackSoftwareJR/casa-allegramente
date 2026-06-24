@@ -162,7 +162,7 @@ function ValuesMobile() {
         setActiveIdx(next);
       }
     });
-  }, [rawProgress]);
+  }, [rawProgress, M]);
 
   const v = values[activeIdx];
 

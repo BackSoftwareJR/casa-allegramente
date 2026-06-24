@@ -108,7 +108,10 @@ const GRADIENT_POSITIONS = {
   right: { x: "110%", y: "0%" },
 }
 
-const TRANSITION_CONFIG = { ease: [0.25, 0.1, 0.25, 1], duration: 0.5 }
+const TRANSITION_CONFIG = {
+  ease: [0.25, 0.1, 0.25, 1] as const,
+  duration: 0.5,
+} satisfies Transition
 
 const heroVariants = cva("relative min-h-svh w-full overflow-hidden", {
   variants: {
@@ -245,8 +248,8 @@ export const AnimatedContainer = React.forwardRef<
       whileInView="visible"
       viewport={{ once: true, ...props.viewport }}
       transition={{
-        duration: props.transition?.delay ?? 0.4,
-        ease: props.transition?.delay ?? "easeIn",
+        duration: props.transition?.duration ?? 0.4,
+        ease: props.transition?.ease ?? "easeIn",
         delay: props.transition?.delay ?? 0.4,
         ...props.transition,
       }}

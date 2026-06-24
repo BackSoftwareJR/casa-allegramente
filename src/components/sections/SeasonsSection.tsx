@@ -20,7 +20,7 @@ export default function SeasonsSection() {
           className="mb-14 max-w-xl"
         >
           <motion.p variants={fadeUp} className="font-sans text-sm font-semibold uppercase tracking-[0.15em] text-primary-700">
-            Tutto l'anno
+            Tutto l&apos;anno
           </motion.p>
           <motion.h2
             variants={fadeUp}

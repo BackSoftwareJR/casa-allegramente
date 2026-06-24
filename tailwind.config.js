@@ -9,6 +9,15 @@ module.exports = {
     extend: {
       // ── PALETTE CASA ALLEGRAMENTE (dal logo) ──────────────────────────────
       colors: {
+        border: "hsl(var(--border))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        card: {
+          DEFAULT: "hsl(var(--card))",
+        },
+        muted: {
+          foreground: "hsl(var(--muted-foreground))",
+        },
         // Primari dal logo — arancione pastello
         primary: {
           DEFAULT: '#E8956A',

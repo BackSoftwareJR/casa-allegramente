@@ -14,7 +14,7 @@ export default function BlogHero() {
         <div className="gold-divider mt-6" />
         <p className="mt-5 font-sans text-base leading-relaxed text-ink-light">
           Approfondimenti per famiglie e caregiver: come scegliere la struttura giusta, affrontare le scelte
-          delicate con serenità e scoprire la vita quotidiana in una residenza a TODO_CITTA, in provincia di Como.
+          delicate con serenità e scoprire la vita quotidiana in una casa famiglia a Rivarolo Canavese, nel Canavese piemontese.
         </p>
       </div>
     </header>

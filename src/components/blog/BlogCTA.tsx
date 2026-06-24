@@ -15,7 +15,7 @@ const WHATSAPP_BLOG = `https://wa.me/${siteConfig.contact.whatsapp}?text=${encod
 
 export default function BlogCTA({
   title = 'Hai domande sulla nostra struttura?',
-  description = 'Siamo a TODO_CITTA (TODO), residenza per anziani autosufficienti con massimo 10 ospiti. Prenota una visita gratuita e senza impegno.',
+  description = 'Siamo a Rivarolo Canavese (TO), casa famiglia per anziani autosufficienti con massimo 6 ospiti. Prenota una visita gratuita e senza impegno.',
   variant = 'default',
 }: BlogCTAProps) {
   return (

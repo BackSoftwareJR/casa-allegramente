@@ -57,6 +57,26 @@ const nextConfig = {
         destination: 'https://TODO-sostituire-dominio.it/:path*',
         permanent: true,
       },
+      {
+        source: '/blog/alternativa-rsa-como-casa-famiglia',
+        destination: '/blog/alternativa-rsa-canavese-casa-famiglia',
+        permanent: true,
+      },
+      {
+        source: '/blog/quanto-costa-residenza-anziani-como',
+        destination: '/blog/quanto-costa-residenza-anziani-canavese',
+        permanent: true,
+      },
+      {
+        source: '/blog/residenze-anziani-como-provincia-guida',
+        destination: '/blog/residenze-anziani-canavese-guida',
+        permanent: true,
+      },
+      {
+        source: '/blog/cabiate-brianza-comasca-residenza-anziani',
+        destination: '/blog/rivarolo-canavese-residenza-anziani',
+        permanent: true,
+      },
     ];
   },
 };
